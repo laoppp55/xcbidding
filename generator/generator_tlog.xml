@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="C:\projects\webbuilder\generator\lib\ojdbc6.jar" />
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+			<property name="mergeable" value="false"></property>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@localhost:1521:orcl11g" userId="bucgdbadmin" password="qazwsxokm">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.bizwink.po" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.bizwink.persistence" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+		<!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+            targetPackage="com.bizwink.persistence" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+		<table tableName="tlog_bad" domainObjectName="TlogBad"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_badname" domainObjectName="TlogBadname"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_bot" domainObjectName="TlogBot"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_botname" domainObjectName="TlogBotname"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_browser" domainObjectName="TlogBrowser"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_cookieinfo" domainObjectName="TlogCookieinfo"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_detail" domainObjectName="TlogDetail"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_domaininfo" domainObjectName="TlogDomaininfo"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_enter_page" domainObjectName="TlogEnterPage"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_exit_page" domainObjectName="TlogExitPage"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_hits_in_hour" domainObjectName="TlogHitsInHour"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_hostinfo" domainObjectName="TlogHostinfo"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_ip" domainObjectName="TlogIp"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_os" domainObjectName="TlogOs"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_pv_in_hour" domainObjectName="TlogPvInHour"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_refer" domainObjectName="TlogRefer"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+		<table tableName="tlog_summary" domainObjectName="TlogSummary"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+	</context>
+</generatorConfiguration>

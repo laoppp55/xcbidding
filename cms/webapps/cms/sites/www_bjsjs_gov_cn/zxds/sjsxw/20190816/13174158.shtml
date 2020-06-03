@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head xmlns="">
+<title>石景山新闻20190815 > 在线电视 > 石景山新闻</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="stylesheet" type="text/css" href="/css/main.css" />
+<link rel="stylesheet" type="text/css" href="/css/article.css" /><script type="text/javascript" src="/js/style.js"></script>
+<script src="/_sys_js/commentarticle.js" type="text/javascript"></script></head>
+<body xmlns="">
+<div class="main"><div class="con">
+<div class="article_c">
+<div class="article_title">
+<div class="article_t_left">石景山新闻</div>
+<div class="article_t_right">当前位置：<A HREF=/index.shtml>首页</A> -> <A HREF=/zxds/index.shtml>在线电视</A> -> <A HREF=/zxds/sjsxw/index.shtml>石景山新闻</A></div>
+</div>
+<div class="article_txt">
+<div class="article_txt_t">石景山新闻20190815</div>
+<div class="article_txt_time"><span>2019年08月16日 &nbsp; 来源：&nbsp;&nbsp;我要分享：</span><span class="share"><script type="text/javascript">
+        href_url = window.location.href;
+        document.write("<a href=\"http://service.weibo.com/share/share.php?title=石景山新闻20190815&url="+href_url+"\" title=\"分享到新浪微博\" target=\"_blank\"><img alt=\"\" src=\"/images/20140721_37.jpg\" /></a>");
+ document.write("<a href=\"http://share.v.t.qq.com/index.php?c=share&a=index&title=石景山新闻20190815&url="+href_url+"\" title=\"分享到腾讯微博\" target=\"_blank\"><img alt=\"\" src=\"/images/20140721_38.jpg\" /></a>");
+document.write("<a href=\"http://t.people.com.cn/toshareinfo.action?title=石景山新闻20190815&url="+href_url+"\" title=\"分享到人民微博\" target=\"_blank\"><img alt=\"\" src=\"/images/20140721_39.jpg\" /></a>");
+    </script> </span></div>
+<div class="article_txt_c">
+<p style="text-align: center; margin-top: 15px"><script language=javascript>
+     var Sys = {};
+     var ua = navigator.userAgent.toLowerCase();
+     var s;
+     (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1]:
+     (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1]:
+     (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1]:
+     (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1]:
+     (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1]:0;
+     if(Sys.ie){
+document.write('<object width="600" height="450" classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,5,715" standby="Loading Microsoft Windows Media Player components..." type="application/x-oleobject" hspace="5"> ' + 
+'<param name="AutoRewind" value=1>' +
+'<param name="FileName" value="http://www.bjsjs.gov.cn/zxds/sjsxw/images\shipin1565917586534.flv"> ' +
+'<param name="ShowControls" value="1"> ' +
+'<param name="ShowPositionControls" value="0"> ' +
+'<param name="ShowAudioControls" value="1"> ' +
+'<param name="ShowTracker" value="0"> ' +
+'<param name="ShowDisplay" value="0"> ' +
+'<param name="ShowStatusBar" value="0"> ' +
+'<param name="ShowGotoBar" value="0"> ' +
+'<param name="ShowCaptioning" value="0"> ' +
+'<param name="AutoStart" value=1> '+
+'<param name="Volume" value="5000"> '+
+'<param name="AnimationAtStart" value="0"> '+
+'<param name="TransparentAtStart" value="0"> '+ 
+'<param name="AllowChangeDisplaySize" value="0"> '+
+'<param name="AllowScan" value="0"> '+
+'<param name="EnableContextMenu" value="0"> '+
+'<param name="ClickToPlay" value="0"> '+
+'</object>');
+     } else {
+         document.write('FLV格式以外的其他视频格式文件需要特别多媒体播放插件进行播放！<br />');
+         document.write('<a href="http://www.bjsjs.gov.cn/zxds/sjsxw/images\shipin1565917586534.flv">石景山新闻20190815</a>');
+     }
+     </script>
+</p>
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</body>
+</html>

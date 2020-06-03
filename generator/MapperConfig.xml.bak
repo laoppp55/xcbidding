@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration   
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+
+	 <environments default="development">  
+        <environment id="development">  
+            <transactionManager type="JDBC" />  
+            <dataSource type="POOLED">  
+                <property name="driver" value="com.mysql.jdbc.Driver" />  
+                <property name="url" value="jdbc:mysql://localhost:3306/cwzdb" />  
+                <property name="username" value="cwzdbadmin" />  
+                <property name="password" value="1qaz2wsx" />  
+            </dataSource>  
+        </environment>  
+    </environments>  
+    <mappers>  
+        <!--mapper resource="com/bizwink/persistence/Attechemnts.xml" />
+        <mapper resource="com/bizwink/persistence/PotetialBidder.xml" />
+        <mapper resource="com/bizwink/persistence/BiddingSecitons.xml" />
+        <mapper resource="com/bizwink/persistence/SuppBiddingRecord.xml" />
+        <mapper resource="com/bizwink/persistence/SuppBiddingSectionRecord.xml" />
+        <mapper resource="com/bizwink/persistence/OpenBiddingItemTemplate.xml" />
+        <mapper resource="com/bizwink/persistence/AuditItemTemplate.xml" />
+        <mapper resource="com/bizwink/persistence/AuditItems.xml" />
+        <mapper resource="com/bizwink/persistence/AuditItemsforSessions.xml" />
+        <mapper resource="com/bizwink/persistence/OpenBiddingItems.xml" />
+        <mapper resource="com/bizwink/persistence/EvalBidingMethodBrief.xml" />
+        <mapper resource="com/bizwink/persistence/EvalBidingScoreItems.xml" />
+        <mapper resource="com/bizwink/persistence/EvalBidingScoreItemsForSessions.xml" />
+        <mapper resource="com/bizwink/persistence/PurchaseProject.xml" />
+        <mapper resource="com/bizwink/persistence/Section.xml" />
+        <mapper resource="com/bizwink/persistence/PlaceReserveInformation.xml" />
+        <mapper resource="com/bizwink/persistence/PlaceReserveInformationforSections.xml" />
+        <mapper resource="com/bizwink/persistence/ZhSuppBiddingRecord.xml" />
+        <mapper resource="com/bizwink/persistence/BaseExpertInformation.xml" /-->
+        <mapper resource="com/bizwink/basic/code/persistence/CodeClassfy.xml" />
+        <mapper resource="com/bizwink/basic/code/persistence/HierarchyCode.xml" />
+        <mapper resource="com/bizwink/basic/code/persistence/NameValueCode.xml" />
+        <mapper resource="com/bizwink/persistence/PurchasingAgency.xml" />
+        <mapper resource="com/bizwink/persistence/PurchaseProject.xml" />
+        <mapper resource="com/bizwink/persistence/BulletinNotice.xml" />
+        <mapper resource="com/bizwink/persistence/ChangeNotice.xml" />
+        <mapper resource="com/bizwink/persistence/WinResultsNotice.xml" />
+        <mapper resource="com/bizwink/persistence/BaseContract.xml" />
+        <mapper resource="com/bizwink/persistence/section.xml" />
+        <mapper resource="com/bizwink/persistence/BidderInfo.xml" />
+        <mapper resource="com/bizwink/persistence/SuppBiddingRecord.xml" />
+        <mapper resource="com/bizwink/persistence/SuppBiddingSectionRecord.xml" />
+        <mapper resource="com/bizwink/persistence/bhApplyCredit.xml" />
+        <mapper resource="com/bizwink/persistence/bhApplyGuarantee.xml" />
+        <mapper resource="com/bizwink/persistence/BudgetProject.xml" />
+        <mapper resource="com/bizwink/persistence/BaseDictionaryItem.xml" />
+        <mapper resource="com/bizwink/persistence/BaseAttachment.xml" />
+	</mappers>  
+	
+</configuration>

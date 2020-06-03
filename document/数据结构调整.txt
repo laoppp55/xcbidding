@@ -1,0 +1,5 @@
+bidder_info     Ôö¼Óemail          varchar(100)
+                    idcardback     varchar(200)
+		    otherpic       varchar(200)
+
+

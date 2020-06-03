@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="C:\projects\webbuilder_for_bjrb\generator\lib\mysql-connector-java-5.1.6-bin.jar" />
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+			<property name="mergeable" value="false"></property>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3306/cwzdb" userId="cwzdbadmin" password="1qaz2wsx">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.bizwink.po" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.bizwink.persistence" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+		<!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+            targetPackage="com.bizwink.persistence" targetProject="src">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+		<!--table tableName="tbl_Attechemnts" domainObjectName="Attechemnts"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_PotetialBidder" domainObjectName="PotetialBidder"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_BiddingSecitons" domainObjectName="BiddingSecitons"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_SuppBiddingRecord" domainObjectName="SuppBiddingRecord"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_SuppBiddingSectionRecord" domainObjectName="SuppBiddingSectionRecord"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_OpenBiddingItemTemplate" domainObjectName="OpenBiddingItemTemplate"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_AuditItemTemplate" domainObjectName="AuditItemTemplate"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_AuditItems" domainObjectName="AuditItems"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_AuditItemsforSessions" domainObjectName="AuditItemsforSessions"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_OpenBiddingItems" domainObjectName="OpenBiddingItems"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_EvalBidingMethodBrief" domainObjectName="EvalBidingMethodBrief"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_EvalBidingScoreItems" domainObjectName="EvalBidingScoreItems"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_EvalBidingScoreItemsForSessions" domainObjectName="EvalBidingScoreItemsForSessions"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="purchase_project" domainObjectName="PurchaseProject"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="section" domainObjectName="Section"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="place_reserve_information" domainObjectName="PlaceReserveInformation"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="place_reserve_information_for_sections" domainObjectName="PlaceReserveInformationforSections"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="supp_bidding_record" domainObjectName="ZhSuppBiddingRecord"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="base_expert_information" domainObjectName="BaseExpertInformation"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table-->	
+
+		<table tableName="tbl_classfy" domainObjectName="CodeClassfy"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_hierarchycode" domainObjectName="HierarchyCode"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="tbl_namevaluecode" domainObjectName="NameValueCode"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="base_purchasing_agency" domainObjectName="PurchasingAgency"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="purchase_project" domainObjectName="PurchaseProject"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="bulletin_notice" domainObjectName="BulletinNotice"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="change_notice" domainObjectName="ChangeNotice"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="win_results_notice" domainObjectName="WinResultsNotice"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="base_contract" domainObjectName="BaseContract"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="section" domainObjectName="Section"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="bidder_info" domainObjectName="BidderInfo"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="supp_bidding_record" domainObjectName="SuppBiddingRecord"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="supp_bidding_section_record" domainObjectName="SuppBiddingSectionRecord"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="bh_apply_credit" domainObjectName="bhApplyCredit"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="bh_apply_guarantee" domainObjectName="bhApplyGuarantee"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="budget_project" domainObjectName="BudgetProject"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="base_attachment" domainObjectName="BaseAttachment"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+		<table tableName="base_dictionary_item" domainObjectName="BaseDictionaryItem"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false">  
+          <property name="useActualColumnNames" value="true"/>
+        </table>	
+
+	</context>
+</generatorConfiguration>
