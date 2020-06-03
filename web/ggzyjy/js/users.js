@@ -740,7 +740,6 @@ function checkBidApplicationInfo(form) {
         return false;
     } else {
         var result = IdCodeValid(idcard);
-        alert(result);
         if (result.pass == false) {
             $.msgbox({
                 height:120,
@@ -1070,9 +1069,8 @@ function checkvalid(form,actionflag) {
             return false;
         }
 
-        var reg = /[^\u4e00-\u9fa5A-Za-z0-9]/g;
+        var reg = /[^\u4e00-\u9fa5A-Za-z0-9\(\)\（\）]/g;
         if (reg.test(name)) {
-            //alert("用户名格式不正确");
             $.msgbox({
                 height: 120,
                 width: 250,

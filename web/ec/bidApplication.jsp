@@ -141,42 +141,26 @@
 				<td><input type="text" name="lawPersonTel" id="lawPersonTel" value="<%=lawPersonTel%>" class="input_but_5"></td>
 			</tr>
 		</table>
-		<div class="title_box_2">潜在投标联系人信息</div>
+		<div class="title_box_2">被授权人信息</div>
 		<table width="100%" border="0" class="reg_table e">
 			<tbody>
 			<tr>
-				<td width="25%" align="right"><span class="redstar">*</span>投标联系人:</td>
+				<td width="25%" align="right"><span class="redstar">*</span>被授权人姓名:</td>
 				<td width="25%"><input name="contactorname" id="contactor" type="text" class="input_but_5"></td>
-				<td width="25%" align="right"><span class="redstar">*</span>联系人手机:</td>
+				<td width="25%" align="right"><span class="redstar">*</span>被授权人手机:</td>
 				<td><input name="contactormphone" id="contactNumber" type="text" class="input_but_5"></td>
 			</tr>
 			<tr>
-				<td align="right"><span class="redstar">*</span>联系人单位座机:</td>
+				<td align="right"><span class="redstar">*</span>被授权人座机:</td>
 				<td><input name="contactorphone" id="contactorphone" type="text" class="input_but_5"></td>
-				<td align="right"><span class="redstar">*</span>电子邮箱</td>
+				<td align="right"><span class="redstar">*</span>被授权人电子邮箱</td>
 				<td><input type="text" name="email" id="email" class="input_but_5"></td>
 			</tr>
 			<tr>
-				<td align="right"><span class="redstar">*</span>联系人身份证号:</td>
+				<td align="right"><span class="redstar">*</span>被授权人身份证号:</td>
 				<td><input name="idcard" id="idcardno" type="text" class="input_but_5"></td>
 				<td align="right"></td>
 				<td></td>
-			</tr>
-			<tr>
-				<td align="right" valign="middle"><span class="redstar">*</span>身份证照片（正面）：</td>
-				<td colspan="3">
-					<input type="hidden" name="idcardpic_frontfile" id="f_file" value="">
-					<input type="button"  name="idcardpicf" value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('f');">
-					<span id="f_id"></span>
-				</td>
-			</tr>
-			<tr>
-				<td align="right" valign="middle">身份证照片（反面）：</td>
-				<td colspan="3">
-					<input type="hidden" name="idcardpic_backfile" id="b_file" value="">
-					<input type="button"  name="idcardpicb"  value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('b');">
-					<span id="b_id"></span>
-				</td>
 			</tr>
 			</tbody>
 		</table>
@@ -200,6 +184,22 @@
 				</td>
 			</tr>
 			<tr>
+				<td align="right" valign="middle"><span class="redstar">*</span>身份证照片（正面）：</td>
+				<td colspan="3">
+					<input type="hidden" name="idcardpic_frontfile" id="f_file" value="">
+					<input type="button"  name="idcardpicf" value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('f');">
+					<span id="f_id"></span>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle">身份证照片（反面）：</td>
+				<td colspan="3">
+					<input type="hidden" name="idcardpic_backfile" id="b_file" value="">
+					<input type="button"  name="idcardpicb"  value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('b');">
+					<span id="b_id"></span>
+				</td>
+			</tr>
+			<tr>
 				<td align="right">其它:</td>
 				<td>
 					<input type="hidden" name="otherpic" id="other_file" value="">
@@ -207,11 +207,10 @@
 					<span id="other_id"></span>
 				</td>
 			</tr>
-
-			<!--tr>
-				<td align="right"><span class="redstar">*</span>风险承诺书横版:</td>
-				<td><span class="download"><a href="#">下载</a></span><span>风险承诺书要手工填写，加盖公司公章，上传彩色影音件</span></td>
-			</tr-->
+			<tr>
+				<td align="right"><span class="redstar">*</span>所有附件格式要求:</td>
+				<td><span class="download"><a href="#">下载</a></span><span>所有上传附件均应为加盖公司公章的彩色影印件，法人委托书必须有法人代表及被授权人签字</span></td>
+			</tr>
 			</tbody>
 		</table>
 		<div class="title_box_2"><!--验证码--></div>

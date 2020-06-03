@@ -33,9 +33,7 @@
     BulletinNoticeWithBLOBs bulletinNotice = null;
     PurchaseProjectWithBLOBs purchaseProject = null;
     BudgetProject budgetProject = null;
-    BaseDictionaryItem baseDictionaryItem = null;
-    DictGetfilesModel dictGetfilesModel = null;
-    String receiveFileWay = null,receiveFileWayName = null;
+    String receiveFileWay = null;
     Users user = null;
     String buymethod = null;
     List<Section> sectionList = null;
@@ -45,7 +43,8 @@
 
         INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
         bulletinNotice = noticeService.getBulletinNoticeByUUID(uuid);
-
+        receiveFileWay = bulletinNotice.getReceiveFileWay();
+        System.out.println("receiveFileWay:" + receiveFileWay);
         IPurchaseProjectService purchaseProjectService = (IPurchaseProjectService)appContext.getBean("purchaseProjectService");
         purchaseProject = purchaseProjectService.getProjectInfoWithBLOBsByProjCode(bulletinNotice.getPurchaseprojcode());
         sectionList = purchaseProjectService.getSectionsByProjcode(purchaseProject.getPurchaseprojcode());
@@ -67,24 +66,12 @@
             buymethod = "竞争性磋商";
         else if(budgetProject.getBuymethod().equals("9"))
             buymethod = "其它";
-
-        IDictionaryItemService dictionaryItemService = (IDictionaryItemService)appContext.getBean("dictionaryItemService");
-        if (bulletinNotice == null)
-            response.sendRedirect("/users/error.jsp");
-        else {
-            //baseDictionaryItem = dictionaryItemService.getBaseDictionaryItemByUUID(bulletinNotice.getReceiveFileWay());
-            //receiveFileWay = baseDictionaryItem.getValue();
-            System.out.println("receiveWAy:" + bulletinNotice.getReceiveFileWay());
-            dictGetfilesModel = dictionaryItemService.getDictGetfilesModel(bulletinNotice.getReceiveFileWay());
-            receiveFileWay = bulletinNotice.getReceiveFileWay();
-            if (dictGetfilesModel!=null) receiveFileWayName = dictGetfilesModel.getName();
-        }
     }
 
     int section_num  = 0;
     if (sectionList!=null) section_num = sectionList.size();
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!doctype html>
 <html>
@@ -140,7 +127,7 @@
                     content:{type:'alert', content:'您已经完成了网上报名操作，可以到用户中心"投标项目管理"下载招标文件'},
                     animation:0,        //禁止拖拽
                     drag:false          //禁止动画
-                //autoClose: 10       //自动关闭
+                    //autoClose: 10       //自动关闭
                 });
             } else {
                 //判断是否已经过了招标文件发售截止时间
@@ -210,8 +197,7 @@
 <%@include file="/ggzyjy/inc/head_ggxx.shtml" %>
 <div class="main clearfix">
     <div class="banner_box">
-        <div class="baner_box_left">全国公共资源交易平台（北京市·西城区）西城区公共资源交易<br>
-            信息网<br>公平 公正 公开 诚信</div>
+        <div class="baner_box_left">西城区公共资源交易信息网</div>
     </div>
     <div class="menu_box_1">
         <div class="home_box"><a href="/ggzyjy/">首页</a></div>
@@ -246,17 +232,17 @@
                 <p></p>
                 <h3>项目概况</h3> <%=bulletinNotice.getProjBasicInfo()%>
                 <p></p> <p><strong>一、项目基本情况</strong></p>
-                <p>项目编号：<%=budgetProject.getApprovalno()%></p>
+                <p>项目编号：<%=purchaseProject.getInvestprojcode()%></p>
                 <p>项目名称：<%=budgetProject.getProjectname()%></p>
                 <% if (section_num == 1) {%>
-                <p>预算金额：<%=String.format("%.4f",sectionList.get(0).getMargin().doubleValue())%> 万元（人民币）</p>
-                <p>最高限价：<%=String.format("%.4f",sectionList.get(0).getUpprice().doubleValue())%> 万元（人民币）</p>
+                <p>预算金额：<%=String.format("%.4f",sectionList.get(0).getBugdet().doubleValue())%> 元（人民币）</p>
+                <p>最高限价：<%=String.format("%.4f",sectionList.get(0).getUpprice().doubleValue())%> 元（人民币）</p>
                 <%} else {
-                   for(int ii=0;ii<section_num;ii++) {
-                       out.print("<p>" + sectionList.get(ii).getSectionname() +  "的预算金额：" + String.format("%.4f",sectionList.get(ii).getMargin().doubleValue()) + " 万元（人民币）</p>");
-                       out.print("<p>" + sectionList.get(ii).getSectionname() +  "的最高限价：" + String.format("%.4f",sectionList.get(ii).getUpprice().doubleValue()) + " 万元（人民币）</p>");
-                       out.print("<p></p>");
-                   }
+                    for(int ii=0;ii<section_num;ii++) {
+                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的预算金额：" + String.format("%.4f",sectionList.get(ii).getBugdet().doubleValue()) + " 元（人民币）</p>");
+                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的最高限价：" + String.format("%.4f",sectionList.get(ii).getUpprice().doubleValue()) + " 元（人民币）</p>");
+                        out.print("<p></p>");
+                    }
                 }%>
                 <p>采购需求：</p>
                 <p></p>
@@ -289,13 +275,22 @@
                 <p><strong>二、申请人的资格要求：</strong></p>
                 <p><%=bulletinNotice.getBidderRequirement()%></p>
                 <p></p>
-                <p>本项目特殊资质需求：</p>
+                <p><%=(purchaseProject.getProjectSpecificRequire()==null)?"":"本项目特殊资质要求："+purchaseProject.getProjectSpecificRequire()%></p>
                 <p></p>
                 <p></p>
                 <p><strong>三、获取招标文件</strong></p>
                 <p>时间：<%=(bulletinNotice.getReceiveFileStartTime()==null)?"":sdf.format(bulletinNotice.getReceiveFileStartTime()) + "至" + ((bulletinNotice.getReceiveFileEndTime()==null)?"":sdf.format(bulletinNotice.getReceiveFileEndTime())) + "双休日及法定节假日除外"%></p>
                 <p>地点：<%=bulletinNotice.getReceiveFileAddress()%></p>
-                <p>方式：<%=(bulletinNotice.getReceiveFileWay().equals("1"))?"现场获取":"网上下载"%></p>
+                <p>方式：
+                    <%
+                        if (receiveFileWay.equals("1"))
+                            out.println("网上下载招标文件");
+                        else if (receiveFileWay.equals("3"))
+                            out.println("网上下载或者现场获取招标文件");
+                        else
+                            out.println("现场获取招标文件");
+                    %>
+                </p>
                 <p>售价：￥<%=bulletinNotice.getSellingPrice()%> 元</p>
                 <p><strong>四、提交投标文件截止时间、开标时间和地点</strong></p>
                 <p>开标时间： <%=sdf.format(bulletinNotice.getTenderEndTime())%>（北京时间）</p>

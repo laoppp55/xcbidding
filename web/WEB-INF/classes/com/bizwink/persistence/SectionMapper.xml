@@ -124,7 +124,7 @@
     select
     <include refid="Base_Column_List" />
     from section
-    where purchaseprojcode = #{purchaseprojcode,jdbcType=VARCHAR}
+    where purchaseprojcode = #{purchaseprojcode,jdbcType=VARCHAR} order by createTime asc
   </select>
 
   <select id="getSectionBySecotionCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
