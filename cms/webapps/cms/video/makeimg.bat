@@ -1,1 +1,0 @@
-ffmpeg.exe -i %1 -y -f image2 -ss 5 -t 0.001 -s 120x90 %2 2>encode.txt
