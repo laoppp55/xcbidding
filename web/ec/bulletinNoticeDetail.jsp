@@ -44,7 +44,7 @@
         INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
         bulletinNotice = noticeService.getBulletinNoticeByUUID(uuid);
         receiveFileWay = bulletinNotice.getReceiveFileWay();
-        System.out.println("receiveFileWay:" + receiveFileWay);
+        if (receiveFileWay == null) receiveFileWay = "";
         IPurchaseProjectService purchaseProjectService = (IPurchaseProjectService)appContext.getBean("purchaseProjectService");
         purchaseProject = purchaseProjectService.getProjectInfoWithBLOBsByProjCode(bulletinNotice.getPurchaseprojcode());
         sectionList = purchaseProjectService.getSectionsByProjcode(purchaseProject.getPurchaseprojcode());
@@ -102,6 +102,22 @@
         }
 
         function downfile(uuid) {
+            //检查供应商提交的信息是否通过了审核
+            var auditFlag = 0;
+            htmlobj = $.ajax({
+                url: "/ec/checkSuppAuditInfo.jsp?thetime=<%=System.currentTimeMillis()%>",
+                data: {
+                    compcode:"<%=(user!=null)?user.getCOMPANYCODE():""%>"
+                },
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if (data.auditstatus == "审核中" || data.auditstatus == "核验中") {
+                        auditFlag = 1;
+                    }
+                }
+            });
+
             //判断供应商是否已经报名
             var appFlag = 0;
             htmlobj = $.ajax({
@@ -119,29 +135,73 @@
                 }
             });
 
-            if (appFlag == 1) {
-                //alert("您已经完成了网上报名操作，可以到用户中心\"投标项目管理\"下载招标文件");
-                $.msgbox({
-                    height:200,
-                    width:300,
-                    content:{type:'alert', content:'您已经完成了网上报名操作，可以到用户中心"投标项目管理"下载招标文件'},
-                    animation:0,        //禁止拖拽
-                    drag:false          //禁止动画
-                    //autoClose: 10       //自动关闭
-                });
+            //判断是否已经过了招标文件发售截止时间
+            var out_of_date_flag = false;
+            htmlobj = $.ajax({
+                url: "/ec/checkTenderEndTime.jsp?thetime=<%=System.currentTimeMillis()%>",
+                data: {
+                    uuid: uuid
+                },
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    if (data.result == true) {
+                        out_of_date_flag = true;
+                    }
+                }
+            });
+
+            var unloginflag = <%=unloginflag%>;           //判断用户是否登录
+            if (unloginflag == 0) {
+                /*$.msgbox({
+                    height:120,
+                    width:250,
+                    content:{type:'alert', content:'请先登录，然后在下载招标文件'},
+                    animation:0,          //禁止拖拽
+                    drag:false            //禁止动画
+                    //autoClose: 5000       //自动关闭
+                });*/
+                alert("请先登录，然后在下载招标文件");
+                window.location.href = "/users/login.jsp";
             } else {
-                //判断是否已经过了招标文件发售截止时间
-                var out_of_date_flag = false;
-                htmlobj = $.ajax({
-                    url: "/ec/checkTenderEndTime.jsp?thetime=<%=System.currentTimeMillis()%>",
-                    data: {
-                        uuid: uuid
-                    },
-                    dataType: 'json',
-                    async: false,
-                    success: function (data) {
-                        if (data.result == true) {
-                            out_of_date_flag = true;
+                if (auditFlag == 1) {
+                    //alert("您提交的公司基本信息尚未通过审核，通过审核后在下载“招标文件”");
+                    $.msgbox({
+                        height:200,
+                        width:300,
+                        content:{type:'alert', content:'您提交的公司基本信息尚未通过审核，通过审核后在下载“招标文件”'},
+                        animation:0,        //禁止拖拽
+                        drag:false          //禁止动画
+                        //autoClose: 10       //自动关闭
+                    });
+                    return false;
+                } else {
+                    if (appFlag == 1) {
+                        //alert("您已经完成了网上报名操作，可以到用户中心\"投标项目管理\"下载招标文件");
+                        $.msgbox({
+                            height:200,
+                            width:300,
+                            content:{type:'alert', content:'您已经完成了网上报名操作，可以到用户中心"投标项目管理"下载招标文件'},
+                            animation:0,        //禁止拖拽
+                            drag:false          //禁止动画
+                            //autoClose: 10       //自动关闭
+                        });
+                        return false;
+                    } else {
+                        if (out_of_date_flag == false) {
+                            var userid = "<%=URLEncoder.encode(userid,"utf-8")%>";
+                            htmlobj = $.ajax({
+                                url: "/getUserInfo.do",
+                                data: {
+                                    username: userid
+                                },
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    window.location.href = "/ec/bidApplication.jsp?uuid=" + uuid;
+                                }
+                            });
+                        } else {
                             $.msgbox({
                                 height: 200,
                                 width: 300,
@@ -152,35 +212,6 @@
                             });
                             return false;
                         }
-                    }
-                });
-
-                if (out_of_date_flag == false) {
-                    var unloginflag = <%=unloginflag%>;
-                    if (unloginflag == 0) {
-                        /*$.msgbox({
-                            height:120,
-                            width:250,
-                            content:{type:'alert', content:'请先登录，然后在下载招标文件'},
-                            animation:0,          //禁止拖拽
-                            drag:false           //禁止动画
-                            //autoClose: 5000       //自动关闭
-                        });*/
-                        alert("请先登录，然后在下载招标文件");
-                        window.location.href = "/users/login.jsp";
-                    } else {
-                        var userid = "<%=URLEncoder.encode(userid,"utf-8")%>";
-                        htmlobj = $.ajax({
-                            url: "/getUserInfo.do",
-                            data: {
-                                username: userid
-                            },
-                            dataType: 'json',
-                            async: false,
-                            success: function (data) {
-                                window.location.href = "/ec/bidApplication.jsp?uuid=" + uuid;
-                            }
-                        });
                     }
                 }
             }
