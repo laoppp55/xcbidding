@@ -53,7 +53,6 @@
     <result column="projectSpecificRequire" jdbcType="VARCHAR" property="projectSpecificRequire" />
     <result column="isBidEnterprise" jdbcType="VARCHAR" property="isBidEnterprise" />
     <result column="invitationMethod" jdbcType="VARCHAR" property="invitationMethod" />
-    <result column="flag" jdbcType="VARCHAR" property="flag" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bizwink.po.PurchaseProjectWithBLOBs">
     <!--
@@ -107,7 +106,7 @@
     attachment, platformcode, placecode, pubserviceplatcode, customer, createTime, budgetProjectId,
     isTender, isConment, isNotice, isCexpert, isContract, isHide, isBid, isSave, creator,
     priceFormCode, otherProgramBudget, version, isView,isPretrial,isScrap,isBond,
-    practicableGovernmentProcurement,projectSpecificRequire,isBidEnterprise,invitationMethod,flag
+    practicableGovernmentProcurement,projectSpecificRequire,isBidEnterprise,invitationMethod
   </sql>
   <sql id="Blob_Column_List">
     <!--
@@ -190,7 +189,7 @@
     isCexpert, isContract, isHide,
     isBid, isSave, creator, priceFormCode,
     otherProgramBudget, version, isView,isPretrial,isScrap,isBond，
-    practicableGovernmentProcurement,projectSpecificRequire,isBidEnterprise,invitationMethod,flag，
+    practicableGovernmentProcurement,projectSpecificRequire,isBidEnterprise,invitationMethod,
     purchasecontent, notes)
     values (#{uuid,jdbcType=CHAR}, #{purchaseprojcode,jdbcType=VARCHAR}, #{purchaseprojname,jdbcType=VARCHAR},
     #{investprojcode,jdbcType=VARCHAR}, #{tenderprojtype,jdbcType=VARCHAR}, #{purchasername,jdbcType=VARCHAR},
@@ -207,7 +206,7 @@
     #{otherProgramBudget,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{isView,jdbcType=INTEGER},
     #{isPretrial,jdbcType=INTEGER},#{isScrap,jdbcType=INTEGER},#{isBond,jdbcType=VARCHAR},
     #{practicableGovernmentProcurement,jdbcType=VARCHAR},#{projectSpecificRequire,jdbcType=VARCHAR},
-    #{isBidEnterprise,jdbcType=VARCHAR},#{invitationMethod,jdbcType=VARCHAR},#{flag,jdbcType=VARCHAR},
+    #{isBidEnterprise,jdbcType=VARCHAR},#{invitationMethod,jdbcType=VARCHAR},
     #{purchasecontent,jdbcType=LONGVARCHAR}, #{notes,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bizwink.po.PurchaseProjectWithBLOBs">
@@ -358,9 +357,6 @@
       <if test="invitationMethod != null">
         invitationMethod,
       </if>
-      <if test="flag != null">
-        flag,
-      </if>
       <if test="purchasecontent != null">
         purchasecontent,
       </if>
@@ -509,9 +505,6 @@
       </if>
       <if test="invitationMethod != null">
         #{invitationMethod,jdbcType=INTEGER},
-      </if>
-      <if test="flag != null">
-        #{flag,jdbcType=INTEGER},
       </if>
       <if test="purchasecontent != null">
         #{purchasecontent,jdbcType=LONGVARCHAR},
@@ -676,9 +669,6 @@
       <if test="invitationMethod != null">
         invitationMethod = #{invitationMethod,jdbcType=INTEGER},
       </if>
-      <if test="flag != null">
-        flag = #{flag,jdbcType=INTEGER},
-      </if>
       <if test="purchasecontent != null">
         purchasecontent = #{purchasecontent,jdbcType=LONGVARCHAR},
       </if>
@@ -740,7 +730,6 @@
     projectSpecificRequire = #{projectSpecificRequire,jdbcType=INTEGER},
     isBidEnterprise = #{isBidEnterprise,jdbcType=INTEGER},
     invitationMethod = #{invitationMethod,jdbcType=INTEGER},
-    flag = #{flag,jdbcType=INTEGER},
     purchasecontent = #{purchasecontent,jdbcType=LONGVARCHAR},
     notes = #{notes,jdbcType=LONGVARCHAR}
     where uuid = #{uuid,jdbcType=CHAR}
@@ -789,15 +778,14 @@
     priceFormCode = #{priceFormCode,jdbcType=VARCHAR},
     otherProgramBudget = #{otherProgramBudget,jdbcType=VARCHAR},
     version = #{version,jdbcType=VARCHAR},
-    isView = #{isView,jdbcType=INTEGER}
-    isPretrial = #{isPretrial,jdbcType=INTEGER}
-    isScrap = #{isScrap,jdbcType=INTEGER}
-    isBond = #{isBond,jdbcType=INTEGER}
-    practicableGovernmentProcurement = #{practicableGovernmentProcurement,jdbcType=INTEGER}
-    projectSpecificRequire = #{projectSpecificRequire,jdbcType=INTEGER}
-    isBidEnterprise = #{isBidEnterprise,jdbcType=INTEGER}
+    isView = #{isView,jdbcType=INTEGER},
+    isPretrial = #{isPretrial,jdbcType=INTEGER},
+    isScrap = #{isScrap,jdbcType=INTEGER},
+    isBond = #{isBond,jdbcType=INTEGER},
+    practicableGovernmentProcurement = #{practicableGovernmentProcurement,jdbcType=INTEGER},
+    projectSpecificRequire = #{projectSpecificRequire,jdbcType=INTEGER},
+    isBidEnterprise = #{isBidEnterprise,jdbcType=INTEGER},
     invitationMethod = #{invitationMethod,jdbcType=INTEGER}
-    flag = #{flag,jdbcType=INTEGER}
     where uuid = #{uuid,jdbcType=CHAR}
   </update>
 </mapper>
