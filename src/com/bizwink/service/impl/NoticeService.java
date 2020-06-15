@@ -66,9 +66,26 @@ public class NoticeService implements INoticeService{
         return bulletinNoticeMapper.getTopBulletinNotice(params);
     }
 
+    public List<voBulletinNotice> SearchBulletinNotice(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword){
+        Map params = new HashMap();
+        params.put("startrow",startrow);
+        params.put("rows",rows);
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return bulletinNoticeMapper.SearchBulletinNotice(params);
+    }
+
+    public int SearchBulletinNoticeCount(Timestamp now,String keyword) {
+        Map params = new HashMap();
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return bulletinNoticeMapper.SearchBulletinNoticeCount(params);
+    }
+
     public int getChangeNoticeCount(Timestamp now) {
         return changeNoticeMapper.getChangeNoticeCount(now).intValue();
     }
+
     public List<voChangeNotice> getChangeNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows) {
         Map params = new HashMap();
         params.put("startrow",startrow);
@@ -76,6 +93,22 @@ public class NoticeService implements INoticeService{
         params.put("publishtime",now);
 
         return changeNoticeMapper.getChangeNoticeList(params);
+    }
+
+    public int SearchChangeNoticeCount(Timestamp now,String keyword) {
+        Map params = new HashMap();
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return changeNoticeMapper.SearchChangeNoticeCount(params).intValue();
+    }
+
+    public List<voChangeNotice> SearchChangeNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword) {
+        Map params = new HashMap();
+        params.put("startrow",startrow);
+        params.put("rows",rows);
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return changeNoticeMapper.SearchChangeNoticeList(params);
     }
 
     public List<voChangeNotice> getTopChangeNotice(Timestamp now,int toprows) {
@@ -93,12 +126,29 @@ public class NoticeService implements INoticeService{
     public int getWinResultsNoticeCount(Timestamp now) {
         return winResultsNoticeMapper.getWinResultsNoticeCount(now).intValue();
     }
+
     public List<voWinResultsNotice> getWinResultsNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows) {
         Map params = new HashMap();
         params.put("startrow",startrow);
         params.put("rows",rows);
         params.put("publishtime",now);
         return winResultsNoticeMapper.getWinResultsNoticeList(params);
+    }
+
+    public int SearchWinResultsNoticeCount(Timestamp now,String keyword) {
+        Map params = new HashMap();
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return winResultsNoticeMapper.SearchWinResultsNoticeCount(params).intValue();
+    }
+
+    public List<voWinResultsNotice> SearchWinResultsNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword) {
+        Map params = new HashMap();
+        params.put("startrow",startrow);
+        params.put("rows",rows);
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return winResultsNoticeMapper.SearchWinResultsNoticeList(params);
     }
 
     public List<voWinResultsNotice> getTopWinResultsNotice(Timestamp now,int toprows) {
@@ -123,6 +173,22 @@ public class NoticeService implements INoticeService{
         params.put("publishtime",now);
 
         return baseContractMapper.getBaseContractList(params);
+    }
+
+    public int SearchBaseContractCount(Timestamp now,String keyword) {
+        Map params = new HashMap();
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return baseContractMapper.SearchBaseContractCount(params);
+    }
+
+    public List<voBaseContract> SearchBaseContractList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword) {
+        Map params = new HashMap();
+        params.put("startrow",startrow);
+        params.put("rows",rows);
+        params.put("publishtime",now);
+        params.put("keyword",keyword);
+        return baseContractMapper.SearchBaseContractList(params);
     }
 
     public List<voBaseContract> getTopBaseContract(Timestamp now,int toprows) {

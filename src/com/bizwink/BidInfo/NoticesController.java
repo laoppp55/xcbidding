@@ -4,10 +4,12 @@ import com.bizwink.po.*;
 import com.bizwink.service.INoticeService;
 import com.bizwink.util.ParamUtil;
 import com.bizwink.util.SpringInit;
+import com.bizwink.util.filter;
 import com.bizwink.vo.voBaseContract;
 import com.bizwink.vo.voBulletinNotice;
 import com.bizwink.vo.voChangeNotice;
 import com.bizwink.vo.voWinResultsNotice;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +66,49 @@ public class NoticesController {
         return count;
     }
 
+    @RequestMapping(value="/SearchBulletinNotice.do")
+    public @ResponseBody List<voBulletinNotice> SearchBulletinNotice(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<voBulletinNotice> bulletinNotices = null;
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int pageno = ParamUtil.getIntParameter(request,"page",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",10);
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
+
+        int startrow = 0;
+        int endrow = 0;
+        if (pageno <= 0) {
+            startrow = 0;
+            endrow = (pageno + 1) * rows;
+        } else {
+            startrow = (pageno-1) * rows;
+            endrow = pageno * rows;
+        }
+
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            bulletinNotices = noticeService.SearchBulletinNotice(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
+        }
+
+        return  bulletinNotices;
+    }
+
+    @RequestMapping(value="/SearchBulletinNoticeCount.do")
+    public @ResponseBody int SearchBulletinNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int count = 0;
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            count = noticeService.SearchBulletinNoticeCount(now,keyword);
+        }
+
+        return count;
+    }
+
     @RequestMapping(value="/ChangeNoticeTop10.do")
     public @ResponseBody List<voChangeNotice> getChangeNoticeTop10(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<voChangeNotice> changeNotices = null;
@@ -96,6 +141,35 @@ public class NoticesController {
     @RequestMapping(value="/ChangeNoticeCount.do")
     @ResponseBody
     public int getChangeNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int count = 0;
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            count = noticeService.getChangeNoticeCount(now);
+        }
+
+        return count;
+    }
+
+    @RequestMapping(value="/SearchChangeNoticeList.do")
+    public @ResponseBody List<voChangeNotice> SearchChangeNoticeList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<voChangeNotice> changeNotices = null;
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int startrow = ParamUtil.getIntParameter(request,"start",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            changeNotices = noticeService.getChangeNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+        }
+
+        return  changeNotices;
+    }
+
+    @RequestMapping(value="/SearchChangeNoticeCount.do")
+    @ResponseBody
+    public int SearchChangeNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ApplicationContext appContext = SpringInit.getApplicationContext();
         int count = 0;
         if (appContext!=null) {
@@ -149,6 +223,36 @@ public class NoticesController {
 
         return count;
     }
+
+    @RequestMapping(value="/SearchWinResultsNoticeList.do")
+    public @ResponseBody List<voWinResultsNotice> SearchWinResultsNoticeList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<voWinResultsNotice> winResultsNotices = null;
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int startrow = ParamUtil.getIntParameter(request,"start",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            winResultsNotices = noticeService.getWinResultsNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+        }
+
+        return  winResultsNotices;
+    }
+
+    @RequestMapping(value="/SearchWinResultsNoticeCount.do")
+    @ResponseBody
+    public int SearchWinResultsNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int count = 0;
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            count = noticeService.getWinResultsNoticeCount(now);
+        }
+
+        return count;
+    }
+
     @RequestMapping(value="/BaseContractTop10.do")
     public @ResponseBody List<voBaseContract> getBaseContractTop10(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<voBaseContract> baseContracts = null;
@@ -181,6 +285,35 @@ public class NoticesController {
     @RequestMapping(value="/BaseContractCount.do")
     @ResponseBody
     public int getBaseContractCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int count = 0;
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            count = noticeService.getBaseContractCount(now);
+        }
+
+        return count;
+    }
+
+    @RequestMapping(value="/SearchBaseContractList.do")
+    public @ResponseBody List<voBaseContract> SearchBaseContractList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        List<voBaseContract> baseContracts = null;
+        ApplicationContext appContext = SpringInit.getApplicationContext();
+        int startrow = ParamUtil.getIntParameter(request,"start",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        if (appContext!=null) {
+            INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            baseContracts = noticeService.getBaseContractList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+        }
+
+        return  baseContracts;
+    }
+
+    @RequestMapping(value="/SearchBaseContractCount.do")
+    @ResponseBody
+    public int SearchBaseContractCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ApplicationContext appContext = SpringInit.getApplicationContext();
         int count = 0;
         if (appContext!=null) {

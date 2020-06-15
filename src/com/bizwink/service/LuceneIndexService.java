@@ -1,5 +1,6 @@
 package com.bizwink.service;
 
+import com.bizwink.cms.server.InitServer;
 import com.bizwink.indexer.DBDocument;
 import com.bizwink.persistence.ArticleMapper;
 import com.bizwink.persistence.ColumnMapper;
@@ -7,11 +8,7 @@ import com.bizwink.persistence.SiteinfoMapper;
 import com.bizwink.po.Article;
 import com.bizwink.po.Column;
 import com.bizwink.po.Siteinfo;
-import com.bizwink.util.DBUtil;
-import com.bizwink.util.SearchConfig;
-import com.bizwink.util.SpringInit;
 import com.bizwink.util.StringUtil;
-import com.jolbox.bonecp.BoneCPDataSource;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -19,24 +16,20 @@ import org.apache.lucene.index.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URI;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,7 +39,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class LuceneIndexService {
+public class LuceneIndexService extends QuartzJobBean {
     @Autowired
     private ArticleMapper articleMapper;
 
@@ -59,13 +52,15 @@ public class LuceneIndexService {
     public static Logger logger = Logger.getLogger(LuceneIndexService.class.getName());
 
     public void createIndex(){
-        int siteid = SearchConfig.getInstance().getSiteidConfig();
-        createIndex(SearchConfig.getInstance().getIndexpathConfig());
+        InitServer.getInstance().init();
+        String indexPath = InitServer.getProperties().getProperty("main.indexPath");
+        createIndex(indexPath);
     }
 
     public void createIndex(String indexPath) {
         Date start = new Date();
-        logger.debug("create index begin");
+        logger.debug("create index begin===" + indexPath);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         IndexWriter writer =null;
         Directory directory = null;
@@ -81,8 +76,6 @@ public class LuceneIndexService {
             if (!file.exists()) {
                 file.mkdirs();
             }
-            // 配置索引
-            //Analyzer analyzer = new SmartChineseAnalyzer();
             try {
                 Analyzer analyzer = new IKAnalyzer();
                 directory = new SimpleFSDirectory(new File(indexPath));
@@ -111,8 +104,8 @@ public class LuceneIndexService {
     }
 
     void  indexDoc(IndexWriter writer,int siteid) {
-        //List<Article> articleList =articleMapper.getNeedIndex(siteid);
-        List<Article> articleList =DBUtil.getNeedIndex(siteid);
+        List<Article> articleList =articleMapper.getNeedIndex(siteid);
+       // List<Article> articleList =DBUtil.getNeedIndex(siteid);
         int looptime=0;
         String artcileids ="";
         while (articleList !=null &&(articleList.size()>0) ){
@@ -171,5 +164,12 @@ public class LuceneIndexService {
     private String getArticlePathInfo(String columnids) {
 
         return null;
+    }
+
+    @Override
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        Map properties = context.getJobDetail().getJobDataMap();
+        String message = (String)properties.get("message");
+        this.createIndex();
     }
 }

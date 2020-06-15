@@ -23,9 +23,17 @@ public interface INoticeService {
 
     List<voBulletinNotice> getTopBulletinNotice(Timestamp now,int toprows);
 
+    List<voBulletinNotice> SearchBulletinNotice(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword);
+
+    int SearchBulletinNoticeCount(Timestamp now,String keyword);
+
     int getChangeNoticeCount(Timestamp now);
 
     List<voChangeNotice> getChangeNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows);
+
+    int SearchChangeNoticeCount(Timestamp now,String keyword);
+
+    List<voChangeNotice> SearchChangeNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword);
 
     List<voChangeNotice> getTopChangeNotice(Timestamp now,int toprows);
 
@@ -35,6 +43,10 @@ public interface INoticeService {
 
     List<voWinResultsNotice> getWinResultsNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows);
 
+    int SearchWinResultsNoticeCount(Timestamp now,String keyword);
+
+    List<voWinResultsNotice> SearchWinResultsNoticeList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword);
+
     List<voWinResultsNotice> getTopWinResultsNotice(Timestamp now,int toprows);
 
     WinResultsNotice getWinResultsNoticeByUUID(String uuid);
@@ -42,6 +54,10 @@ public interface INoticeService {
     int getBaseContractCount(Timestamp now);
 
     List<voBaseContract> getBaseContractList(Timestamp now,BigDecimal startrow, BigDecimal rows);
+
+    int SearchBaseContractCount(Timestamp now,String keyword);
+
+    List<voBaseContract> SearchBaseContractList(Timestamp now,BigDecimal startrow, BigDecimal rows,String keyword);
 
     List<voBaseContract> getTopBaseContract(Timestamp now,int toprows);
 
