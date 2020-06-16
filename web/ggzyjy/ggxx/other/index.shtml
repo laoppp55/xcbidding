@@ -45,7 +45,13 @@
         <div class="path_box">您的位置：<a href="/ggzyjy/">首页</a>&gt;<a href="/ggzyjy/ggxx/index.shtml">公告信息</a>&gt;其它公告</div>
         <div class="search_box"><input type="text" class="sear"></div>
     </div>
-    <div class="list_main_box" id="datalistid"></div>
+    <div class="search_box" onclick="javascript:doSearch('other');">
+        <form name="searchForm">
+            <input type="hidden" name="pageno" value="0">
+            <input type="hidden" name="rows" value="10">
+            <input type="text" name="keyword" class="sear" value="">
+        </form>
+    </div>
 </div>
 <div class="foot_box">
     <div class="main">

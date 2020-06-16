@@ -43,7 +43,13 @@
     <div class="menu_c_box"><a href="/ggzyjy/ggxx/zbgg/index.shtml">招标（资审）公告</a>|<a class="current">变更公告</a>|<a href="/ggzyjy/ggxx/winzb/index.shtml">中标公告</a>|<a href="/ggzyjy/ggxx/other/index.shtml">其它公告</a></div>
     <div class="path_search_box">
         <div class="path_box">您的位置：<a href="/ggzyjy/">首页</a>&gt;<a href="/ggzyjy/ggxx/index.shtml">公告信息</a>&gt;变更公告</div>
-        <div class="search_box"><input type="text" class="sear"></div>
+        <div class="search_box" onclick="javascript:doSearch('bggg');">
+            <form name="searchForm">
+                <input type="hidden" name="pageno" value="0">
+                <input type="hidden" name="rows" value="10">
+                <input type="text" name="keyword" class="sear" value="">
+            </form>
+        </div>
     </div>
     <div class="list_main_box" id="datalistid"></div>
 </div>

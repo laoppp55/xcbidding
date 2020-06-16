@@ -189,7 +189,8 @@ body {
 	width: 135px;
 }
 .page_box {
-	float: right;
+	/*float: right;*/
+	margin-left: 60px;
 	margin-top: 50px;
 }
 .page_box a,

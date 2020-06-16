@@ -71,6 +71,8 @@
     int section_num  = 0;
     if (sectionList!=null) section_num = sectionList.size();
 
+    System.out.println("section list:" + section_num);
+
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!doctype html>
@@ -265,13 +267,22 @@
                 <p></p> <p><strong>一、项目基本情况</strong></p>
                 <p>项目编号：<%=purchaseProject.getInvestprojcode()%></p>
                 <p>项目名称：<%=budgetProject.getProjectname()%></p>
-                <% if (section_num == 1) {%>
-                <p>预算金额：<%=String.format("%.4f",sectionList.get(0).getBugdet().doubleValue())%> 元（人民币）</p>
-                <p>最高限价：<%=String.format("%.4f",sectionList.get(0).getUpprice().doubleValue())%> 元（人民币）</p>
-                <%} else {
+                <% if (section_num == 1) {
+                    Double bugdet = 0d;
+                    Double upprice = 0d;
+                    if (sectionList.get(0).getBugdet()!=null) bugdet = sectionList.get(0).getBugdet().doubleValue();
+                    if (sectionList.get(0).getUpprice()!=null) upprice= sectionList.get(0).getUpprice().doubleValue();
+                %>
+                <p>预算金额：<%=String.format("%.4f",bugdet)%> 元（人民币）</p>
+                <p>最高限价：<%=String.format("%.4f",upprice)%> 元（人民币）</p>
+                <%} else if(section_num > 0){
                     for(int ii=0;ii<section_num;ii++) {
-                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的预算金额：" + String.format("%.4f",sectionList.get(ii).getBugdet().doubleValue()) + " 元（人民币）</p>");
-                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的最高限价：" + String.format("%.4f",sectionList.get(ii).getUpprice().doubleValue()) + " 元（人民币）</p>");
+                        Double bugdet = 0d;
+                        Double upprice = 0d;
+                        if (sectionList.get(ii).getBugdet()!=null) bugdet = sectionList.get(ii).getBugdet().doubleValue();
+                        if (sectionList.get(ii).getUpprice()!=null) upprice= sectionList.get(ii).getUpprice().doubleValue();
+                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的预算金额：" + String.format("%.4f",bugdet) + " 元（人民币）</p>");
+                        out.print("<p>" + sectionList.get(ii).getSectionname() +  "的最高限价：" + String.format("%.4f",upprice) + " 元（人民币）</p>");
                         out.print("<p></p>");
                     }
                 }%>
@@ -292,12 +303,17 @@
                                     out.print("<p></p>");
                                 }
                             }
-                        } else {
-                            if (sectionList.get(0).getSynflag().equals("0")) {
-                                out.print("<p>本项目不接受联合体投标</p>");
-                                out.print("<p></p>");
+                        } else if (section_num == 1){
+                            if (sectionList.get(0).getSynflag()!=null) {
+                                if (sectionList.get(0).getSynflag().equals("0")) {
+                                    out.print("<p>本项目不接受联合体投标</p>");
+                                    out.print("<p></p>");
+                                } else {
+                                    out.print("<p>本项目接受联合体投标</p>");
+                                    out.print("<p></p>");
+                                }
                             } else {
-                                out.print("<p>本项目接受联合体投标</p>");
+                                out.print("<p>本项目不接受联合体投标</p>");
                                 out.print("<p></p>");
                             }
                         }
