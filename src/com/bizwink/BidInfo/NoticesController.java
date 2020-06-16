@@ -9,6 +9,7 @@ import com.bizwink.vo.voBaseContract;
 import com.bizwink.vo.voBulletinNotice;
 import com.bizwink.vo.voChangeNotice;
 import com.bizwink.vo.voWinResultsNotice;
+import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -76,13 +77,10 @@ public class NoticesController {
         if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
 
         int startrow = 0;
-        int endrow = 0;
         if (pageno <= 0) {
             startrow = 0;
-            endrow = (pageno + 1) * rows;
         } else {
-            startrow = (pageno-1) * rows;
-            endrow = pageno * rows;
+            startrow = pageno * rows;
         }
 
         if (appContext!=null) {
@@ -90,6 +88,10 @@ public class NoticesController {
             Timestamp now = new Timestamp(System.currentTimeMillis());
             bulletinNotices = noticeService.SearchBulletinNotice(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
         }
+
+        Gson gson = new Gson();
+        String jsondata = gson.toJson(bulletinNotices);
+        System.out.println(jsondata);
 
         return  bulletinNotices;
     }
@@ -105,6 +107,8 @@ public class NoticesController {
             Timestamp now = new Timestamp(System.currentTimeMillis());
             count = noticeService.SearchBulletinNoticeCount(now,keyword);
         }
+
+        System.out.println("search result:" + count);
 
         return count;
     }
@@ -156,12 +160,23 @@ public class NoticesController {
     public @ResponseBody List<voChangeNotice> SearchChangeNoticeList(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<voChangeNotice> changeNotices = null;
         ApplicationContext appContext = SpringInit.getApplicationContext();
-        int startrow = ParamUtil.getIntParameter(request,"start",0);
-        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        int pageno = ParamUtil.getIntParameter(request,"page",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",10);
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
+
+        int startrow = 0;
+        if (pageno <= 0) {
+            startrow = 0;
+        } else {
+            startrow = pageno * rows;
+        }
+
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            changeNotices = noticeService.getChangeNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            changeNotices = noticeService.SearchChangeNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
         }
 
         return  changeNotices;
@@ -170,12 +185,14 @@ public class NoticesController {
     @RequestMapping(value="/SearchChangeNoticeCount.do")
     @ResponseBody
     public int SearchChangeNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         ApplicationContext appContext = SpringInit.getApplicationContext();
         int count = 0;
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            count = noticeService.getChangeNoticeCount(now);
+            count = noticeService.SearchChangeNoticeCount(now,keyword);
         }
 
         return count;
@@ -228,12 +245,23 @@ public class NoticesController {
     public @ResponseBody List<voWinResultsNotice> SearchWinResultsNoticeList(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<voWinResultsNotice> winResultsNotices = null;
         ApplicationContext appContext = SpringInit.getApplicationContext();
-        int startrow = ParamUtil.getIntParameter(request,"start",0);
-        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        int pageno = ParamUtil.getIntParameter(request,"page",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",10);
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
+
+        int startrow = 0;
+        if (pageno <= 0) {
+            startrow = 0;
+        } else {
+            startrow = pageno * rows;
+        }
+
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            winResultsNotices = noticeService.getWinResultsNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            winResultsNotices = noticeService.SearchWinResultsNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
         }
 
         return  winResultsNotices;
@@ -244,10 +272,12 @@ public class NoticesController {
     public int SearchWinResultsNoticeCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ApplicationContext appContext = SpringInit.getApplicationContext();
         int count = 0;
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            count = noticeService.getWinResultsNoticeCount(now);
+            count = noticeService.SearchWinResultsNoticeCount(now,keyword);
         }
 
         return count;
@@ -300,12 +330,22 @@ public class NoticesController {
     public @ResponseBody List<voBaseContract> SearchBaseContractList(HttpServletRequest request, HttpServletResponse response) throws Exception{
         List<voBaseContract> baseContracts = null;
         ApplicationContext appContext = SpringInit.getApplicationContext();
-        int startrow = ParamUtil.getIntParameter(request,"start",0);
-        int rows = ParamUtil.getIntParameter(request,"rows",20);
+        int pageno = ParamUtil.getIntParameter(request,"page",0);
+        int rows = ParamUtil.getIntParameter(request,"rows",10);
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
+
+        int startrow = 0;
+        if (pageno <= 0) {
+            startrow = 0;
+        } else {
+            startrow = pageno * rows;
+        }
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            baseContracts = noticeService.getBaseContractList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            baseContracts = noticeService.SearchBaseContractList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
         }
 
         return  baseContracts;
@@ -316,10 +356,12 @@ public class NoticesController {
     public int SearchBaseContractCount(HttpServletRequest request, HttpServletResponse response) throws Exception{
         ApplicationContext appContext = SpringInit.getApplicationContext();
         int count = 0;
+        String keyword = ParamUtil.getParameter(request,"keyword");
+        if (keyword!=null) keyword = filter.excludeHTMLCode(keyword);
         if (appContext!=null) {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
-            count = noticeService.getBaseContractCount(now);
+            count = noticeService.SearchBaseContractCount(now,keyword);
         }
 
         return count;

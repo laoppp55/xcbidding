@@ -79,7 +79,7 @@ public class NoticeService implements INoticeService{
         Map params = new HashMap();
         params.put("publishtime",now);
         params.put("keyword",keyword);
-        return bulletinNoticeMapper.SearchBulletinNoticeCount(params);
+        return bulletinNoticeMapper.SearchBulletinNoticeCount(params).intValue();
     }
 
     public int getChangeNoticeCount(Timestamp now) {
