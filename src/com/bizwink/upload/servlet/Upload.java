@@ -104,7 +104,8 @@ public class Upload extends HttpServlet {
             InputStream fileInputStream = fileItem.getInputStream();
 
             //获取上传文件保存的根路径
-            String path = InitServer.getProperties().getProperty("main.uploaddir");
+            InitServer initServer = InitServer.getInstance();
+            String path = initServer.getProperties().getProperty("main.uploaddir");
             //String path = request.getRealPath("/upload");
             //也可不用自己写实现方法直接使用,fileItem.write(uploadFile);
             File uploadFile = new File(path,fileName);

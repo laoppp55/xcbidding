@@ -117,7 +117,7 @@ public class BidInfoController {
                 "&email=" + ((email==null)?"":email) + "&faxnum=" + ((faxnum==null)?"":faxnum) + "&yzcode=" + yzcode + "&Idcard=" + ((lawPersonIdcard==null)?"":lawPersonIdcard) +
                 "&bankname=" + bankname + "&BaseAccountName=" + BaseAccountName + "&baseAccount=" + baseAccount + "&businessBrief=" + businessBrief + "&operationAddress=" + operationAddress,"utf-8");
 
-        logger.info("create:" + checkcode + "=" + paramVals);
+        checkcode = MD5Util.MD5Encode(checkcode,"utf-8");
 
         if (pwd!=null && yzcode!=null && yzcodeForSession!=null) {
             if (checkcode.equals(paramVals)) {
@@ -196,7 +196,8 @@ public class BidInfoController {
 
                     if (!userExistFlag && !emailExistFlag && email != null && userid != null) {
                         FtpFileToDest ftpFileToDest = new FtpFileToDest();
-                        String localFileName = InitServer.getProperties().getProperty("main.uploaddir");
+                        InitServer initServer = InitServer.getInstance();
+                        String localFileName = initServer.getProperties().getProperty("main.uploaddir");
                         if (localFileName.endsWith(File.separator))
                             localFileName = localFileName + licensepic;
                         else

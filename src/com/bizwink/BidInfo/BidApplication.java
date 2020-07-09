@@ -132,7 +132,8 @@ public class BidApplication {
 
                             //FTP联系人身份证正面图片、背面图片、营业执照图片、委托人授权书文件、其他上传文件到交易系统服务器
                             FtpFileToDest ftpFileToDest = new FtpFileToDest();
-                            String localRootPath = InitServer.getProperties().getProperty("main.uploaddir");
+                            InitServer initServer = InitServer.getInstance();
+                            String localRootPath = initServer.getProperties().getProperty("main.uploaddir");
                             String localFileName = null;
                             if (localRootPath.endsWith(File.separator))
                                 localFileName = localRootPath + licensepic;
