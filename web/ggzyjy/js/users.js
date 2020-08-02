@@ -1652,8 +1652,6 @@ function checkvalid(form,actionflag) {
     var faxnum = form.faxnum.value;
     if (faxnum == null || (typeof faxnum == "undefined")) faxnum = "";
 
-
-
     var messages = "";
     if(actionflag=="registe")
         messages = "username=" + name + "&pwdname=" + pass + "&suppliername=" + suppname  + "&supplierCode=" + suppcode + "&lawPersonName=" + lawPersonName + "&lawPersonTel=" + lawPersonTel +
@@ -1670,9 +1668,9 @@ function checkvalid(form,actionflag) {
             "&contactorname=" + contactorname + "&contactormphone=" + contactormphone + "&contactorphone=" + contactorphone + "&email=" + email + "&faxnum=" + faxnum + "&yzcode=" + yzcode + "&Idcard=" + lawPersonIdcard +
             "&bankname=" + bankname + "&BaseAccountName=" + BaseAccountName + "&baseAccount=" + baseAccount + "&businessBrief=" + businessBrief + "&operationAddress=" + operationAddress;
 
-    form.checkval.value=hex_md5(messages);
+    //form.checkval.value=hex_md5(messages);
     //alert(messages);
-    //form.checkval.value = messages;
+    form.checkval.value = messages;
 
     //var agreement = "";
     // $("input:checkbox[name='agreement']:checked").each(function() {

@@ -37,11 +37,12 @@
     Users user = null;
     String buymethod = null;
     List<Section> sectionList = null;
+    INoticeService noticeService = null;
     if (appContext!=null) {
         IUserService usersService = (IUserService)appContext.getBean("usersService");
         if (unloginflag == 1) user = usersService.getUserinfoByUserid(userid);
 
-        INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
+        noticeService = (INoticeService)appContext.getBean("noticeService");
         bulletinNotice = noticeService.getBulletinNoticeByUUID(uuid);
         receiveFileWay = bulletinNotice.getReceiveFileWay();
         if (receiveFileWay == null) receiveFileWay = "";
@@ -66,13 +67,15 @@
             buymethod = "竞争性磋商";
         else if(budgetProject.getBuymethod().equals("9"))
             buymethod = "其它";
+
+        //保存用户已经阅读过公告的信息
+        if (authToken!=null) {
+            noticeService.saveReadNoticeFlag(bulletinNotice.getBulletintitle(),bulletinNotice.getUuid(),authToken.getUserid());
+        }
     }
 
     int section_num  = 0;
     if (sectionList!=null) section_num = sectionList.size();
-
-    System.out.println("section list:" + section_num);
-
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!doctype html>
@@ -171,7 +174,7 @@
                     $.msgbox({
                         height:200,
                         width:300,
-                        content:{type:'alert', content:'您提交的公司基本信息尚未通过审核，通过审核后在下载“招标文件”'},
+                        content:{type:'alert', content:'您提交的公司基本信息尚未通过信息核验，通过信息核验后再下载“招标文件”'},
                         animation:0,        //禁止拖拽
                         drag:false          //禁止动画
                         //autoClose: 10       //自动关闭
@@ -183,7 +186,7 @@
                         $.msgbox({
                             height:200,
                             width:300,
-                            content:{type:'alert', content:'您已经完成了网上报名操作，可以到用户中心"投标项目管理"下载招标文件'},
+                            content:{type:'alert', content:'您已经完成了网上下载标书信息提交操作，可以到用户中心"投标项目管理"下载招标文件'},
                             animation:0,        //禁止拖拽
                             drag:false          //禁止动画
                             //autoClose: 10       //自动关闭
@@ -246,7 +249,7 @@
     <div class="menu_c_box"><a class="current">招标（资审）公告</a>|<a href="/ggzyjy/ggxx/bggg/">变更公告</a>|<a href="/ggzyjy/ggxx/winzb/">中标公告</a>|<a href="/ggzyjy/ggxx/other/">其它公告</a></div>
     <div class="path_search_box">
         <div class="path_box">您的位置：<a href="/ggzyjy/">首页</a>&gt;<a href="/ggzyjy/ggxx/">公告信息</a>&gt;招标（资审）公告</div>
-        <div class="search_box"><input type="text" class="sear"></div>
+        <!--div class="search_box"><input type="text" class="sear"></div-->
     </div>
     <div class="list_main_box" id="datalistid">
         <div id="bcontentid">

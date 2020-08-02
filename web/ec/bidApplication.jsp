@@ -224,7 +224,7 @@
 			</tr>
 			</tbody>
 		</table>
-		<div class="box_center"><input type="submit" class="input_but_10" value="提交报名"></div>
+		<div class="box_center"><input type="submit" class="input_but_10" value="提交"></div>
 	</form>
 </div>
 </body>

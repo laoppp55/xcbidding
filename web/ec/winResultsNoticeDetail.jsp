@@ -9,6 +9,8 @@
 <%@ page import="com.bizwink.service.IWinResultsNoticeService" %>
 <%@ page import="com.bizwink.po.WinResultsNotice" %>
 <%@ page import="com.bizwink.po.WinResultsNoticeWithBLOBs" %>
+<%@ page import="com.bizwink.util.SessionUtil" %>
+<%@ page import="com.bizwink.security.Auth" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -18,8 +20,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
     ApplicationContext appContext = SpringInit.getApplicationContext();
-
     String uuid = ParamUtil.getParameter(request,"uuid");
     PurchaseProject purchaseProject = null;
     BudgetProject budgetProject = null;
@@ -34,6 +36,11 @@
         IBudgetProjectService budgetProjectService = (IBudgetProjectService)appContext.getBean("budgetProjectService");
         if (purchaseProject==null) response.sendRedirect("/users/error.jsp?errcode=300");
         budgetProject = budgetProjectService.getBudgetProjByPrjcode(purchaseProject.getBudgetProjectId());
+
+        //保存用户已经阅读过公告的信息
+        if (authToken!=null) {
+            winResultsNoticeService.saveReadNoticeFlag(winResultsNotice.getWinningAnnName(),winResultsNotice.getUuid(),authToken.getUserid());
+        }
     }
 
     String priceFormCode = winResultsNotice.getPriceFormCode();
@@ -81,7 +88,7 @@
     <div class="menu_c_box"><a href="/ggzyjy/ggxx/zbgg/">招标（资审）公告</a>|<a href="/ggzyjy/ggxx/bggg/">变更公告</a>|<a class="current">中标公告</a>|<a href="/ggzyjy/ggxx/other/">其它公告</a></div>
     <div class="path_search_box">
         <div class="path_box">您的位置：<a href="/ggzyjy/">首页</a>&gt;<a href="/ggzyjy/ggxx/">公告信息</a>&gt;招标（资审）公告</div>
-        <div class="search_box"><input type="text" class="sear"></div>
+        <!--div class="search_box"><input type="text" class="sear"></div-->
     </div>
     <div  style="width: 1105px;margin:0 auto">
         <div style="text-align: center;margin:28px 0 28px 0;"> <span style="font-size: 20px;font-weight: bold"><%=winResultsNotice.getWinningAnnName()%></span></div>

@@ -106,7 +106,8 @@
                       $.msgbox({
                           height: 200,
                           width: 300,
-                          content: {type: 'alert', content: compname + '已经完成注册，如需设置账号请联系管理员' + contactor},
+                          //content: {type: 'alert', content: compname + '已经完成注册，如需设置账号请联系管理员' + contactor},
+                          content: {type: 'alert', content: compname + '已经完成注册'},
                           animation: 0,        //禁止拖拽
                           drag: false          //禁止动画
                           //autoClose: 10       //自动关闭

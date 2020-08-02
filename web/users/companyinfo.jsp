@@ -91,14 +91,26 @@
               cache: false,
               success: function (data) {
                   if (data!=null) {
-                      $.msgbox({
-                          height: 300,
-                          width: 400,
-                          content: {type: 'alert', content: "采购中心审核信息："+data.reason},
-                          animation: 0,        //禁止拖拽
-                          drag: false          //禁止动画
-                          //autoClose: 10       //自动关闭
-                      });
+                      var auditinfo = data.reason;
+                      if (typeof(auditinfo) == "undefined") {
+                          $.msgbox({
+                              height: 300,
+                              width: 400,
+                              content: {type: 'alert', content: "采购中心核验信息：信息核验中"},
+                              animation: 0,        //禁止拖拽
+                              drag: false          //禁止动画
+                              //autoClose: 10       //自动关闭
+                          });
+                      } else {
+                          $.msgbox({
+                              height: 300,
+                              width: 400,
+                              content: {type: 'alert', content: "采购中心核验信息：" + data.reason},
+                              animation: 0,        //禁止拖拽
+                              drag: false          //禁止动画
+                              //autoClose: 10       //自动关闭
+                          });
+                      }
                   }
               }
           });

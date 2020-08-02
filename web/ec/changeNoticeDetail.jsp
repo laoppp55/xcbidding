@@ -9,7 +9,9 @@
 <%@ page import="com.bizwink.service.IChangeNoticeService" %>
 <%@ page import="com.bizwink.po.ChangeNoticeWithBLOBs" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.bizwink.cms.server.MyConstants" %><%--
+<%@ page import="com.bizwink.cms.server.MyConstants" %>
+<%@ page import="com.bizwink.util.SessionUtil" %>
+<%@ page import="com.bizwink.security.Auth" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 18-9-23
@@ -18,6 +20,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
     ApplicationContext appContext = SpringInit.getApplicationContext();
     String uuid = ParamUtil.getParameter(request,"uuid");
     PurchaseProject purchaseProject = null;
@@ -31,16 +34,26 @@
         purchaseProject = purchaseProjectService.getProjectInfoByProjCode(changeNotice.getPurchaseprojcode());
 
         IBudgetProjectService budgetProjectService = (IBudgetProjectService)appContext.getBean("budgetProjectService");
+        if (purchaseProject!=null)
+            System.out.println("budget====" + purchaseProject.getBudgetProjectId());
+        else
+            System.out.println("采购项目为空");
         budgetProject = budgetProjectService.getBudgetProjByPrjcode(purchaseProject.getBudgetProjectId());
+
+        //保存用户已经阅读过公告的信息
+        if (authToken!=null) {
+            changeNoticeService.saveReadNoticeFlag(changeNotice.getBulletintitle(),changeNotice.getUuid(),authToken.getUserid());
+        }
     }
 
     String BulletinType = changeNotice.getBulletinType();
     String NoticeName = "";
-    if (BulletinType.equals("1"))
-        NoticeName = "采购公告";
-    else if (BulletinType.equals("2"))
-        NoticeName = "采购结果公告";
-
+    if (BulletinType!=null) {
+        if (BulletinType.equals("1"))
+            NoticeName = "采购公告";
+        else if (BulletinType.equals("2"))
+            NoticeName = "采购结果公告";
+    }
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 %>
 <!doctype html>
@@ -90,7 +103,7 @@
     <div class="menu_c_box"><a href="/ggzyjy/ggxx/zbgg/">招标（资审）公告</a>|<a class="current">变更公告</a>|<a href="/ggzyjy/ggxx/winzb/">中标公告</a>|<a href="/ggzyjy/ggxx/other/">其它公告</a></div>
     <div class="path_search_box">
         <div class="path_box">您的位置：<a href="/ggzyjy/">首页</a>&gt;<a href="/ggzyjy/ggxx/">公告信息</a>&gt;招标（资审）公告</div>
-        <div class="search_box"><input type="text" class="sear"></div>
+        <!--div class="search_box"><input type="text" class="sear"></div-->
     </div>
 
     <!-- 中间内容-->
@@ -101,8 +114,8 @@
             <p align="center"></p>
             <p><strong>一、项目基本情况</strong></p>
             <p>原公告的采购项目编号：<%=changeNotice.getPurchaseprojcode()%>　　　　　　</p>
-            <p>原公告的采购项目名称：<%=changeNotice.getOriNoticeProjName()%>　　　　　　</p>
-            <p>首次公告日期：<%=sdf.format(changeNotice.getFirstNoticeDate())%>　　　　地址：<%=(changeNotice.getOriNoticeURL()==null)?"":changeNotice.getOriNoticeURL()%>　　　　　　　</p>
+            <p>原公告的采购项目名称：<%=(changeNotice.getOriNoticeProjName()==null)?purchaseProject.getPurchaseprojname():changeNotice.getOriNoticeProjName()%>　　　　　　</p>
+            <p>首次公告日期：<%=(changeNotice.getFirstNoticeDate()!=null)?sdf.format(changeNotice.getFirstNoticeDate()):""%>　　　　地址：<%=(changeNotice.getOriNoticeURL()==null)?"":changeNotice.getOriNoticeURL()%>　　　　　　　</p>
             <p><strong>二、更正信息</strong></p>
             <p>更正事项：<%=NoticeName%></p>
             <p>更正内容：</p>
@@ -113,13 +126,13 @@
             <p></p>
             <p><strong>四、凡对本次公告内容提出询问，请按以下方式联系。</strong></p>
             <p>1.采购人信息</p>
-            <p>名 称：<%=changeNotice.getBuyerName()%>　　　　　</p>
+            <p>名 称：<%=(changeNotice.getBuyerName()==null)?budgetProject.getBuyername():changeNotice.getBuyerName()%>　　　　　</p>
             <p>地址：<%=changeNotice.getBuyerAddress()%>　　　　　　　　</p>
             <p>联系方式：<%=changeNotice.getBuyerContact()%>,<%=changeNotice.getBuyerContactPhone()%>　　　　　　</p>
             <p>2.采购代理机构信息</p>
-            <p>名 称：<%=changeNotice.getAgentName()%>　　　　　　　　　　　　</p>
-            <p>地　址：<%=changeNotice.getAgentAddress()%>　　　　　　　　　　　　</p>
-            <p>联系方式：<%=changeNotice.getAgentContact()%>，<%=changeNotice.getAgentContactPhone()%>　　　　　　　　　　　　</p>
+            <p>名 称：<%=(changeNotice.getAgentName()==null)?purchaseProject.getAgencyname():changeNotice.getAgentName()%>　　　　　　　　　　　　</p>
+            <p>地　址：<%=(changeNotice.getAgentAddress()==null)?changeNotice.getAgentAddress():""%>　　　　　　　　　　　　</p>
+            <p>联系方式：<%=(changeNotice.getAgentContact()==null)?purchaseProject.getAgencycontact():changeNotice.getAgentContact()%>，<%=(changeNotice.getAgentContactPhone()==null)?purchaseProject.getAgencyphone():changeNotice.getAgentContactPhone()%>　　　　　　　　　　　　</p>
             <p>3.项目联系方式</p>
             <p>项目联系人：<%=changeNotice.getProjContactor()%></p>
             <p>电　话：　　<%=changeNotice.getProjContactorPhone()%></p>

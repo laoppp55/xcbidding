@@ -1,6 +1,5 @@
 <%@ page import="com.bizwink.util.*" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
-<%@ page import="java.math.BigDecimal" %>
 <%@ page import="com.bizwink.service.IUserService" %>
 <%@ page import="com.bizwink.po.PurchasingAgency" %>
 <%@ page import="com.bizwink.po.Users" %>

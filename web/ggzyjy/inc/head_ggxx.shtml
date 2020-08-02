@@ -29,9 +29,13 @@
                         if (data.length > 8) loopnum = 8;
                         for (var ii = 0; ii < loopnum; ii++) {
                             var date_str = data[ii].createtime;
+                            var readflag = data[ii].readflag;
                             var posi = date_str.indexOf(" ");
                             if (posi > -1) date_str = date_str.substring(0, posi);
-                            div01_html = div01_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>未读</span></li>"
+                            if (readflag == 1)
+                                div01_html = div01_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>已读</span></li>"
+                            else
+                                div01_html = div01_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>未读</span></li>"
                         }
                         div01_html = div01_html + "</ul>";
                         $("#file_div01").html(div01_html);
@@ -49,9 +53,13 @@
                         if (data.length > 8) loopnum = 8;
                         for (var ii = 0; ii < loopnum; ii++) {
                             var date_str = data[ii].createtime;
+                            var readflag = data[ii].readflag;
                             var posi = date_str.indexOf(" ");
                             if (posi > -1) date_str = date_str.substring(0, posi);
-                            div02_html = div02_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>未读</span></li>"
+                            if (readflag == 1)
+                                div02_html = div02_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>已读</span></li>"
+                            else
+                                div02_html = div02_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].bulletintitle + "</a><span>" + date_str + "</span><span>未读</span></li>"
                         }
                         div02_html = div02_html + "</ul>";
                         $("#file_div02").html(div02_html);
@@ -69,9 +77,13 @@
                         if (data.length > 8) loopnum = 8;
                         for (var ii = 0; ii < loopnum; ii++) {
                             var date_str = data[ii].createTime;
+                            var readflag = data[ii].readflag;
                             var posi = date_str.indexOf(" ");
                             if (posi > -1) date_str = date_str.substring(0, posi);
-                            div03_html = div03_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].winningAnnName + "</a><span>" + date_str + "</span><span>未读</span></li>"
+                            if(readflag == 1)
+                                div03_html = div03_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].winningAnnName + "</a><span>" + date_str + "</span><span>已读</span></li>"
+                            else
+                                div03_html = div03_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].winningAnnName + "</a><span>" + date_str + "</span><span>未读</span></li>"
                         }
                         div03_html = div03_html + "</ul>";
                         $("#file_div03").html(div03_html);
@@ -89,9 +101,13 @@
                         if (data.length > 8) loopnum = 8;
                         for (var ii = 0; ii < loopnum; ii++) {
                             var date_str = data[ii].createtime;
+                            var readflag = data[ii].readflag;
                             var posi = date_str.indexOf(" ");
                             if (posi > -1) date_str = date_str.substring(0, posi);
-                            div04_html = div04_html + "   <li><a href=\"/ec/baseContractDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].contarctName + "</a><span>" + date_str + "</span><span>未读</span></li>"
+                            if(readflag == 1)
+                                div04_html = div04_html + "   <li><a href=\"/ec/baseContractDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].contarctName + "</a><span>" + date_str + "</span><span>已读</span></li>"
+                            else
+                                div04_html = div04_html + "   <li><a href=\"/ec/baseContractDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'>" + data[ii].contarctName + "</a><span>" + date_str + "</span><span>未读</span></li>"
                         }
                         div04_html = div04_html + "</ul>";
                         $("#file_div04").html(div04_html);
@@ -173,13 +189,17 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
                                 } else {
                                     date_str = "";
                                 }
-                                div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag==1)
+                                    div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -205,13 +225,17 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
                                 } else {
                                     date_str = "";
                                 }
-                                div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].bulletintitle + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -237,13 +261,17 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createTime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
                                 } else {
                                     date_str = "";
                                 }
-                                div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].winningAnnName + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if(readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].winningAnnName + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].winningAnnName + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -269,13 +297,17 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
                                 } else {
                                     date_str = "";
                                 }
-                                div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].contarctName + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].contarctName + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + data[ii].contarctName + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -329,6 +361,7 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
@@ -337,7 +370,10 @@
                                 }
                                 var title = data[ii].bulletintitle;
                                 title = title.replace(keyword, "<font color='red'>" + keyword + "</font>");
-                                div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/bulletinNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -377,6 +413,7 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
@@ -385,7 +422,10 @@
                                 }
                                 var title = data[ii].bulletintitle;
                                 title = title.replace(keyword, "<font color='red'>" + keyword + "</font>");
-                                div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/changeNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -425,6 +465,7 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
@@ -433,7 +474,10 @@
                                 }
                                 var title = data[ii].winningAnnName;
                                 title = title.replace(keyword, "<font color='red'>" + keyword + "</font>");
-                                div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>已读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/winResultsNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
@@ -473,6 +517,7 @@
                             var div_html = "<ul>";
                             for (var ii = 0; ii < data.length; ii++) {
                                 var date_str = data[ii].createtime;
+                                var readflag = data[ii].readflag;
                                 if (date_str != null && date_str != "") {
                                     var posi = date_str.indexOf(" ");
                                     if (posi > -1) date_str = date_str.substring(0, posi);
@@ -481,7 +526,10 @@
                                 }
                                 var title = data[ii].bulletintitle;
                                 title = title.replace(keyword, "<font color='red'>" + keyword + "</font>");
-                                div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                if (readflag == 1)
+                                    div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
+                                else
+                                    div_html = div_html + "   <li><a href=\"/ec/baseContractNoticeDetail.jsp?uuid=" + data[ii].uuid + "\" target='_blank'><font color='black'>" + title + "</font></a><span>" + date_str + "</span><span>未读</span></li>"
                             }
                             div_html = div_html + "</ul>";
 
