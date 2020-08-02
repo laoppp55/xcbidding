@@ -6,6 +6,7 @@ public class voBaseContract implements Serializable {
     private String uuid;
     private String contarctName;
     private String createtime;
+    private int readflag;
 
     public String getUuid() {
         return uuid;
@@ -29,5 +30,13 @@ public class voBaseContract implements Serializable {
 
     public void setCreatetime(String createtime) {
         this.createtime = createtime;
+    }
+
+    public int getReadflag() {
+        return readflag;
+    }
+
+    public void setReadflag(int readflag) {
+        this.readflag = readflag;
     }
 }

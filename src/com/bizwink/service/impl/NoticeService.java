@@ -1,9 +1,6 @@
 package com.bizwink.service.impl;
 
-import com.bizwink.persistence.BaseContractMapper;
-import com.bizwink.persistence.BulletinNoticeMapper;
-import com.bizwink.persistence.ChangeNoticeMapper;
-import com.bizwink.persistence.WinResultsNoticeMapper;
+import com.bizwink.persistence.*;
 import com.bizwink.po.*;
 import com.bizwink.service.INoticeService;
 import com.bizwink.vo.voBaseContract;
@@ -19,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class NoticeService implements INoticeService{
@@ -33,6 +31,9 @@ public class NoticeService implements INoticeService{
 
     @Autowired
     private BaseContractMapper baseContractMapper;
+
+    @Autowired
+    private ReadNoticeLogMapper readNoticeLogMapper;
 
     public BulletinNoticeWithBLOBs getBulletinNoticeBySection(String projectsectioncode){
         return bulletinNoticeMapper.getBulletinNoticeBySectionCode(projectsectioncode);
@@ -201,5 +202,26 @@ public class NoticeService implements INoticeService{
 
     public BaseContract getBaseContractByUUID(String uuid) {
         return baseContractMapper.selectByPrimaryKey(uuid);
+    }
+
+    public int saveReadNoticeFlag(String noticeTitle,String noticeid,String userid) {
+        ReadNoticeLog readNoticeLog = new ReadNoticeLog();
+        String uuid = UUID.randomUUID().toString();
+        uuid = uuid.replace("-", "");
+
+        readNoticeLog.setUuid(uuid);
+        readNoticeLog.setNoticetitle(noticeTitle);
+        readNoticeLog.setNoticeid(noticeid);
+        readNoticeLog.setUserid(userid);
+        readNoticeLog.setCreationdate(new Timestamp(System.currentTimeMillis()));
+
+        return readNoticeLogMapper.insert(readNoticeLog);
+    }
+
+    public List<ReadNoticeLog> getReadNotiesLog(String userid,List<String> notice_ids) {
+        Map params = new HashMap();
+        params.put("userid",userid);
+        params.put("noticeids",notice_ids);
+        return readNoticeLogMapper.getReadNoticesLogs(params);
     }
 }

@@ -293,10 +293,13 @@ public class BidInfoController {
                 "&email=" + ((email==null)?"":email) + "&faxnum=" + ((faxnum==null)?"":faxnum) + "&yzcode=" + yzcode + "&Idcard=" + ((lawPersonIdcard==null)?"":lawPersonIdcard) +
                 "&bankname=" + bankname + "&BaseAccountName=" + BaseAccountName + "&baseAccount=" + baseAccount + "&businessBrief=" + businessBrief + "&operationAddress=" + operationAddress,"utf-8");
 
-        logger.info("update:" + checkcode + "=" + paramVals);
+        //logger.info("update:" + checkcode + "=" + paramVals);
+        //System.out.println(checkcode +"==" + paramVals);
+
+        checkcode = MD5Util.MD5Encode(checkcode,"utf-8");
 
         int errcode = 0;
-        if (yzcode!=null && yzcodeForSession!=null && checkcode!=null && paramVals!=null) {
+        if (yzcode!=null && yzcodeForSession!=null) {
             if (checkcode.equals(paramVals)) {
                 if (yzcode.equals(yzcodeForSession)) {
                     //获取数据库中存储的附件名称，比较从前台页面传过来的附件文件名与数据库中的文件名是否相同
@@ -343,7 +346,7 @@ public class BidInfoController {
                     suppinfo.setFax(faxnum);                                                                    //企业联系人传真
                     suppinfo.setBusinessAttachmentIds(licensepic);                                              //企业营业执照图片
                     suppinfo.setCertificateAttachmentIds(promisepic);                                           //企业风险承诺书图片
-                    suppinfo.setAuditstatus("审核中");                                                          //修改信息后，供应商的状态变成审核中，审核中不能执行业务操作
+                    suppinfo.setAuditstatus("核验中");                                                          //修改信息后，供应商的状态变成审核中，审核中不能执行业务操作
 
                     //修改公司基本信息
                     FtpFileToDest ftpFileToDest = new FtpFileToDest();
@@ -382,7 +385,7 @@ public class BidInfoController {
             errcode = -104;              //口令、验证码或者前后台数据校验值为空
         }
 
-        return "redirect:/users/companyinfo.jsp";
+        return "redirect:/users/companyinfo.jsp?errcode=" + errcode;
     }
 
     @RequestMapping(value = "/login.do")

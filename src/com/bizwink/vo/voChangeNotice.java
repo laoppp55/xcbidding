@@ -6,6 +6,8 @@ public class voChangeNotice implements Serializable {
     private String uuid;
     private String Bulletintitle;
     private String Createtime;
+    private int readflag;
+
 
     public String getUuid() {
         return uuid;
@@ -29,5 +31,13 @@ public class voChangeNotice implements Serializable {
 
     public void setCreatetime(String createtime) {
         Createtime = createtime;
+    }
+
+    public int getReadflag() {
+        return readflag;
+    }
+
+    public void setReadflag(int readflag) {
+        this.readflag = readflag;
     }
 }

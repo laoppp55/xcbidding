@@ -1,8 +1,10 @@
 package com.bizwink.BidInfo;
 
 import com.bizwink.po.*;
+import com.bizwink.security.Auth;
 import com.bizwink.service.INoticeService;
 import com.bizwink.util.ParamUtil;
+import com.bizwink.util.SessionUtil;
 import com.bizwink.util.SpringInit;
 import com.bizwink.util.filter;
 import com.bizwink.vo.voBaseContract;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +37,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             bulletinNotices = noticeService.getTopBulletinNotice(now,10);
+            //设置查到的每个招标公告是否被当前用户阅读过
+            if (bulletinNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        notices_ids.add(bulletinNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        voBulletinNotice voBulletinNotice = bulletinNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBulletinNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBulletinNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        bulletinNotices.set(ii,voBulletinNotice);
+                    }
+                }
+            }
         }
 
         return  bulletinNotices;
@@ -48,6 +77,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             bulletinNotices = noticeService.getBulletinNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            //设置查到的每个招标公告是否被当前用户阅读过
+            if (bulletinNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        notices_ids.add(bulletinNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        voBulletinNotice voBulletinNotice = bulletinNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBulletinNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBulletinNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        bulletinNotices.set(ii,voBulletinNotice);
+                    }
+                }
+            }
         }
 
         return  bulletinNotices;
@@ -87,6 +141,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             bulletinNotices = noticeService.SearchBulletinNotice(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
+            //设置查到的每个招标公告是否被当前用户阅读过
+            if (bulletinNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        notices_ids.add(bulletinNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<bulletinNotices.size();ii++) {
+                        voBulletinNotice voBulletinNotice = bulletinNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBulletinNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBulletinNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        bulletinNotices.set(ii,voBulletinNotice);
+                    }
+                }
+            }
         }
 
         Gson gson = new Gson();
@@ -122,6 +201,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             changeNotices = noticeService.getTopChangeNotice(now,10);
+            //设置查到的每个变更公告是否被当前用户阅读过
+            if (changeNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        notices_ids.add(changeNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        voChangeNotice voChangeNotice = changeNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voChangeNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voChangeNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        changeNotices.set(ii,voChangeNotice);
+                    }
+                }
+            }
         }
 
         return  changeNotices;
@@ -137,6 +241,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             changeNotices = noticeService.getChangeNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            //设置查到的每个变更公告是否被当前用户阅读过
+            if (changeNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        notices_ids.add(changeNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        voChangeNotice voChangeNotice = changeNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voChangeNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voChangeNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        changeNotices.set(ii,voChangeNotice);
+                    }
+                }
+            }
         }
 
         return  changeNotices;
@@ -177,6 +306,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             changeNotices = noticeService.SearchChangeNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
+            //设置查到的每个变更公告是否被当前用户阅读过
+            if (changeNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        notices_ids.add(changeNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<changeNotices.size();ii++) {
+                        voChangeNotice voChangeNotice = changeNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voChangeNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voChangeNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        changeNotices.set(ii,voChangeNotice);
+                    }
+                }
+            }
         }
 
         return  changeNotices;
@@ -207,6 +361,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             winResultsNotices = noticeService.getTopWinResultsNotice(now,10);
+            //设置查到的每个中标公告是否被当前用户阅读过
+            if (winResultsNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        notices_ids.add(winResultsNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        voWinResultsNotice voWinResultsNotice = winResultsNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voWinResultsNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voWinResultsNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        winResultsNotices.set(ii,voWinResultsNotice);
+                    }
+                }
+            }
         }
 
         return  winResultsNotices;
@@ -222,6 +401,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             winResultsNotices = noticeService.getWinResultsNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            //设置查到的每个中标公告是否被当前用户阅读过
+            if (winResultsNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        notices_ids.add(winResultsNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        voWinResultsNotice voWinResultsNotice = winResultsNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voWinResultsNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voWinResultsNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        winResultsNotices.set(ii,voWinResultsNotice);
+                    }
+                }
+            }
         }
 
         return  winResultsNotices;
@@ -262,6 +466,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             winResultsNotices = noticeService.SearchWinResultsNoticeList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
+            //设置查到的每个中标公告是否被当前用户阅读过
+            if (winResultsNotices!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        notices_ids.add(winResultsNotices.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<winResultsNotices.size();ii++) {
+                        voWinResultsNotice voWinResultsNotice = winResultsNotices.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voWinResultsNotice.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voWinResultsNotice.setReadflag(1);
+                                break;
+                            }
+                        }
+                        winResultsNotices.set(ii,voWinResultsNotice);
+                    }
+                }
+            }
         }
 
         return  winResultsNotices;
@@ -292,6 +521,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             baseContracts = noticeService.getTopBaseContract(now,10);
+            //设置查到的每个合同公告是否被当前用户阅读过
+            if (baseContracts!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        notices_ids.add(baseContracts.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        voBaseContract voBaseContract = baseContracts.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBaseContract.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBaseContract.setReadflag(1);
+                                break;
+                            }
+                        }
+                        baseContracts.set(ii,voBaseContract);
+                    }
+                }
+            }
         }
 
         return  baseContracts;
@@ -307,6 +561,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             baseContracts = noticeService.getBaseContractList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows));
+            //设置查到的每个合同公告是否被当前用户阅读过
+            if (baseContracts!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        notices_ids.add(baseContracts.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        voBaseContract voBaseContract = baseContracts.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBaseContract.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBaseContract.setReadflag(1);
+                                break;
+                            }
+                        }
+                        baseContracts.set(ii,voBaseContract);
+                    }
+                }
+            }
         }
 
         return  baseContracts;
@@ -346,6 +625,31 @@ public class NoticesController {
             INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
             Timestamp now = new Timestamp(System.currentTimeMillis());
             baseContracts = noticeService.SearchBaseContractList(now,BigDecimal.valueOf(startrow),BigDecimal.valueOf(rows),keyword);
+            //设置查到的每个合同公告是否被当前用户阅读过
+            if (baseContracts!=null) {
+                HttpSession session = request.getSession();
+                Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
+                if (authToken!=null) {
+                    List<String> notices_ids = new ArrayList<>();
+                    List<ReadNoticeLog> readNoticeLogs = null;
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        notices_ids.add(baseContracts.get(ii).getUuid());
+                    }
+                    //获取公告已经被该用户读取过的LOG信息
+                    readNoticeLogs =noticeService.getReadNotiesLog(authToken.getUserid(),notices_ids);
+                    //修改列表的公告是否已经被该用户读过的状态
+                    for(int ii=0;ii<baseContracts.size();ii++) {
+                        voBaseContract voBaseContract = baseContracts.get(ii);
+                        for (int jj = 0; jj < readNoticeLogs.size(); jj++) {
+                            if (voBaseContract.getUuid().equalsIgnoreCase(readNoticeLogs.get(jj).getNoticeid())){
+                                voBaseContract.setReadflag(1);
+                                break;
+                            }
+                        }
+                        baseContracts.set(ii,voBaseContract);
+                    }
+                }
+            }
         }
 
         return  baseContracts;

@@ -6,6 +6,7 @@ public class voWinResultsNotice implements Serializable {
     private String uuid;
     private String winningAnnName;
     private String createTime;
+    private int readflag;
 
     public String getUuid() {
         return uuid;
@@ -29,5 +30,13 @@ public class voWinResultsNotice implements Serializable {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public int getReadflag() {
+        return readflag;
+    }
+
+    public void setReadflag(int readflag) {
+        this.readflag = readflag;
     }
 }

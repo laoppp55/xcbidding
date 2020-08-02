@@ -62,4 +62,8 @@ public interface INoticeService {
     List<voBaseContract> getTopBaseContract(Timestamp now,int toprows);
 
     BaseContract getBaseContractByUUID(String uuid);
+
+    int saveReadNoticeFlag(String noticeTitle,String noticeid,String userid);
+
+    List<ReadNoticeLog> getReadNotiesLog(String userid,List<String> notice_ids);
 }

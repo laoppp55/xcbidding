@@ -189,7 +189,9 @@ public class BidApplication {
             return "redirect:/users/error.jsp?errcode=-205";                 //验证码收入错误
         }
 
-        return "redirect:/ec/download.jsp?uuid=" + bulletinNotice_uuid;
+        //return "redirect:/ec/download.jsp?uuid=" + bulletinNotice_uuid;
+
+        return "redirect:" + MyConstants.getDownloadAddress() + "/oa/common/attachment/publicDownloadFile?id="+bulletinNotice_uuid;
     }
 
     @RequestMapping(value = "/getMyBidInfos.do")
