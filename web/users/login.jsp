@@ -21,6 +21,8 @@
   <script src="/ggzyjy/js/jquery-ui.js" language="javascript" type="text/javascript"></script>
   <script src="/ggzyjy/js/md5-min.js" type="text/javascript"></script>
   <script src="/ggzyjy/js/users.js" type="text/javascript"></script>
+  <script src="/ggzyjy/js/XTXSAB.js" type="text/javascript"></script>
+
   <script language="javascript">
       var errcode = <%=errcode%>;
       $(document).ready(function(){
@@ -39,7 +41,22 @@
           } else if (errcode>0) {
               alert("用户注册成功");
           }
+          //初始化UKEY和CA的环境
+          init(function(){
+              SOF_GetUserList(call_back);
+          },function(){
+
+          });
       });
+
+      function call_back(data){
+          var compname = data.retVal;
+          var posi = compname.indexOf("||");
+          if (posi>-1) compname = compname.substr(0,posi);
+          loginform.username.value = compname;
+          //var dom_node = document.getElementById("ret_data");
+          //dom_node.value = data.retVal;
+      }
 
       function loginsubmit(form) {
           var name = form.username.value;

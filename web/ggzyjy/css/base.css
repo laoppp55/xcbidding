@@ -97,7 +97,7 @@ body {
 	padding: 0 8px;
 }
 .menu_box {
-	z-index: 1;
+	z-index: 3;
 	position: absolute;
 	top: 680px;
 	width: 100%;

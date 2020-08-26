@@ -200,7 +200,7 @@
         }
     </script>
 </head>
-<body>
+<body  style="background-image: url('');height: 600px;">
 <div class="full_box">
     <div class="top_box">
         <!--#include virtual="/inc/head.shtml"-->

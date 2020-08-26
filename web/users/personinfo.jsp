@@ -168,9 +168,9 @@
                     var htmlstr = "<tr bgcolor='white'><td colspan=\"11\" align=\"left\">" +
                         "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:applyGL(" + start + "," + rows + ");\" value=\"申请保函\" />&nbsp;&nbsp;" +
                         "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:queryGL(" + start + "," + rows + ");\" value=\"查询保函申请结果\" />&nbsp;&nbsp;" +
-                        //"<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:decriptGL(" + start + "," + rows + ");\" value=\"保函解密\" />&nbsp;&nbsp;" +
-                        //"<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:applyGLdelay(" + start + "," + rows + ");\" value=\"申请保函延期\" />&nbsp;&nbsp;" +
-                        //"<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:queryGLdelay(" + start + "," + rows + ");\" value=\"查询延期申请结果\" />&nbsp;&nbsp;" +
+                        "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:decriptGL(" + start + "," + rows + ");\" value=\"保函解密\" />&nbsp;&nbsp;" +
+                        "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:applyGLdelay(" + start + "," + rows + ");\" value=\"申请保函延期\" />&nbsp;&nbsp;" +
+                        "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:queryGLdelay(" + start + "," + rows + ");\" value=\"查询延期申请结果\" />&nbsp;&nbsp;" +
                         "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:modifyGLApply(" + start + "," + rows + ");\" value=\"修改保函申请\" />&nbsp;&nbsp;" +
                         "<input type=\"button\" name=\"applyGuarantee\" onclick=\"javascript:deleteGLApply(" + start + "," + rows + ");\" value=\"删除保函申请\" />&nbsp;&nbsp;" +
                         "</td></tr>" +
@@ -295,7 +295,7 @@
                 success:function(data){
                     //$("#projectsid").find("tr:not(:first)").remove();
                     $("#projectsid").find("tr").remove();
-                    var htmlstr = "<tr bgcolor='white'><td><%=purchasingAgency.getOrganName()%><td><%=purchasingAgency.getLegalCode()%></td></td><td colspan=\"8\" align=\"right\"><a href=\"javascript:createApplyCredit("+start + "," + rows + ");\">新建申请</a></td></tr>" +
+                    var htmlstr = "<tr bgcolor='white'><td colspan=\"2\"><%=purchasingAgency.getOrganName()%></td><td><%=purchasingAgency.getLegalCode()%></td><td colspan=\"7\" align=\"right\"><a href=\"javascript:createApplyCredit("+start + "," + rows + ");\">新建申请</a></td></tr>" +
                         "<tr>\n" +
                         "                <td width=\"10%\" height=\"25\" align=\"center\" valign=\"middle\">授信申请名称</td>\n" +
                         "                <td width=\"30%\" align=\"center\" valign=\"middle\">授信申请编号</td>\n" +
@@ -373,8 +373,8 @@
         <div class="title">个人中心</div>
         <ul>
             <li><a href="/ec/myBidinfos.jsp">投标项目管理</a></li>
-            <!--li><a href="javascript:getApplyCredits(0,20);">授信申请管理</a></li>
-            <li><a href="javascript:queryPurchaseProjectsOfNeedMargin(0,20);">保证金管理</a></li-->
+            <li><a href="/users/personinfo.jsp?action=2"><%=(actionid==2)?"<span style=\"color: red\">":""%>授信申请管理<%=(actionid==2)?"</span>":""%></a></li>
+            <li><a href="/users/personinfo.jsp?action=3"><%=(actionid==3)?"<span style=\"color: red\">":""%>保证金管理<%=(actionid==3)?"</span>":""%></a></li>
             <li><a href="/users/companyinfo.jsp">公司信息管理</a></li>
             <li><a href="/users/updatereg.jsp">修改个人注册信息</a></li>
             <li><a href="/users/changePwd.jsp">修改密码</a></li>
