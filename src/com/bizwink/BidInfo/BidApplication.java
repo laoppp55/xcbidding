@@ -77,7 +77,7 @@ public class BidApplication {
         HttpSession session = request.getSession();
         String yzcodeForSession = (String)session.getAttribute("randnum");
         Auth authToken = SessionUtil.getUserAuthorization(request, response, session);
-
+        String bidFile_uuid = null;
         if (yzcode.equals(yzcodeForSession)) {
             if (checkcode.equals(paramVals)) {
                 ApplicationContext appContext = SpringInit.getApplicationContext();
@@ -90,7 +90,7 @@ public class BidApplication {
                     //获取下载招标文件的公告信息，得到公告文件的文件名称
                     INoticeService noticeService = (INoticeService)appContext.getBean("noticeService");
                     bulletinNotice = noticeService.getBulletinNoticeByUUID(bulletinNotice_uuid);
-
+                    bidFile_uuid = bulletinNotice.getReceiveFile();
                     //获取登录用户的信息
                     IUserService usersService = (IUserService)appContext.getBean("usersService");
                     user = usersService.getUserinfoByUserid(authToken.getUserid());
@@ -191,7 +191,7 @@ public class BidApplication {
 
         //return "redirect:/ec/download.jsp?uuid=" + bulletinNotice_uuid;
 
-        return "redirect:" + MyConstants.getDownloadAddress() + "/oa/common/attachment/publicDownloadFile?id="+bulletinNotice_uuid;
+        return "redirect:" + MyConstants.getDownloadAddress() + "/oa/common/attachment/publicDownloadFile?id="+bidFile_uuid;
     }
 
     @RequestMapping(value = "/getMyBidInfos.do")

@@ -300,7 +300,7 @@ public class BidInfoController {
 
         int errcode = 0;
         if (yzcode!=null && yzcodeForSession!=null) {
-            if (checkcode.equals(paramVals)) {
+            ///if (checkcode.equals(paramVals)) {
                 if (yzcode.equals(yzcodeForSession)) {
                     //获取数据库中存储的附件名称，比较从前台页面传过来的附件文件名与数据库中的文件名是否相同
                     PurchasingAgency suppinfoInDB = usersService.getEnterpriseInfoByCompcode(supplierCode);
@@ -378,9 +378,9 @@ public class BidInfoController {
                 } else {
                     errcode = -102;     //输入验证码错误
                 }
-            } else {
-                errcode = -103;          //检验后台获取的数据和前台传入的数据不一致
-            }
+            //} else {
+            //    errcode = -103;          //检验后台获取的数据和前台传入的数据不一致
+            //}
         } else {
             errcode = -104;              //口令、验证码或者前后台数据校验值为空
         }
