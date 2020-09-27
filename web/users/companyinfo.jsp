@@ -26,7 +26,9 @@
     companyinfo = usersService.getEnterpriseInfoByCompcode(user.getCOMPANYCODE());
 
     attechemntsService = (IAttechemntsService)appContext.getBean("attechemntsService");
-    licenseFile = attechemntsService.getAttechmentFilenameByUUID(companyinfo.getBusinessAttachmentIds()).getFilename();
+    System.out.println("attachmentid==" + companyinfo.getBusinessAttachmentIds());
+    if (companyinfo.getBusinessAttachmentIds()!=null)
+      licenseFile = attechemntsService.getAttechmentFilenameByUUID(companyinfo.getBusinessAttachmentIds()).getFilename();
     if (attechemntsService.getAttechmentFilenameByUUID(companyinfo.getCertificateAttachmentIds())!=null)
       promiseFile = attechemntsService.getAttechmentFilenameByUUID(companyinfo.getCertificateAttachmentIds()).getFilename();
   } else {
@@ -303,23 +305,23 @@
         <table width="100%" border="0" class="reg_table e">
           <tbody>
           <tr>
-            <td width="280" align="right"><span class="redstar">*</span>企业营业执照:</td>
+            <td width="280" align="right"><span class="redstar"></span>企业营业执照:</td>
             <td>
-              <input type="hidden" name="licensepic" id="license_file" value="<%=licenseFile%>">
+              <input type="hidden" name="licensepic" id="license_file" value="<%=(licenseFile!=null)?licenseFile:""%>">
               <input type="button" name="license_button"  value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('license');">
-              <span id="license_id"><%=licenseFile%></span>
+              <span id="license_id"><%=(licenseFile!=null)?licenseFile:""%></span>
             </td>
           </tr>
           <tr>
-            <td align="right"><span class="redstar">*</span>风险承诺书:</td>
+            <td align="right"><span class="redstar"></span>风险承诺书:</td>
             <td>
-              <input type="hidden" name="promisefile" id="promise_file" value="<%=promiseFile%>">
+              <input type="hidden" name="promisefile" id="promise_file" value="<%=(promiseFile!=null)?promiseFile:""%>">
               <input type="button"  name="promise_button"  value="上传文件" class="input_txt" autocomplete="off" onclick="javascript:uploadfile('promise');">
-              <span id="promise_id"><%=promiseFile%></span>
+              <span id="promise_id"><%=(promiseFile!=null)?promiseFile:""%></span>
             </td>
           </tr>
           <tr>
-            <td align="right"><span class="redstar">*</span>风险承诺书横版:</td>
+            <td align="right"><span class="redstar"></span>风险承诺书横版:</td>
             <td><span class="download"><a href="#">下载</a></span><span>风险承诺书要手工填写，加盖公司公章，上传彩色影音件</span></td>
           </tr>
           </tbody>

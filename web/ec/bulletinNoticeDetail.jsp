@@ -371,7 +371,7 @@
                 <p></p>
                 <p>
                     <%
-                        if (bulletinNotice.getReceiveNotice()!=null) out.println("<a href=" + MyConstants.getDownloadAddress() + "/oa/common/attachment/publicDownloadFile?id=" + bulletinNotice.getReceiveNotice() + "\"><span style=\"color:red\">公告附件</span></a>");
+                        if (bulletinNotice.getReceiveNotice()!=null) out.println("<a href=" + MyConstants.getDownloadAddress() + "/oa/common/attachment/publicDownloadFile?id=" + bulletinNotice.getReceiveNotice() + "><span style=\"color:red\">公告附件</span></a>");
                     %>
                 </p>
                 <p>
