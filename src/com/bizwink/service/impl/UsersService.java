@@ -262,6 +262,8 @@ public class UsersService implements IUserService {
         int errcode = 0;
         //保存公司营业执照图片信息
         String filename = purchasingAgency.getBusinessAttachmentIds();
+        //System.out.println("license file==" + filename);
+        //System.out.println("userid==" + userid);
         if (filename!=null) {
             Map params = new HashMap();
             params.put("category","base_purchasing_agency_license");
@@ -269,6 +271,7 @@ public class UsersService implements IUserService {
             BaseAttachment baseAttachment = baseAttachmentMapper.getAttachmentByUseridAndCategory(params);
             if (baseAttachment!=null) {
                 String uuid = baseAttachment.getUuid();
+                //System.out.println("营业执照附件不为空==" + uuid);
                 int posi = filename.lastIndexOf(".");
                 String extname = null;
                 if (posi > -1) extname = filename.substring(posi + 1);
@@ -278,18 +281,19 @@ public class UsersService implements IUserService {
                 //baseAttachment.setCreationTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
                 //baseAttachment.setCreatorId(userid);
-                String filepath = InitServer.getProperties().getProperty("main.uploaddir");
-                baseAttachment.setRootPath(filepath);
+                String filepath = MyConstants.getSftpRelatePath(); //交易服务器上传文件的目录地址
                 if (filepath.endsWith(File.separator))
-                    filepath = filepath + filename;
+                    filepath = filepath + purchasingAgency.getLegalCode()+ File.separator + filename;
                 else
-                    filepath = filepath + File.separator + filename;
+                    filepath = filepath + File.separator + purchasingAgency.getLegalCode()+ File.separator + filename;
                 baseAttachment.setFilepath(filepath);
+                baseAttachment.setRootPath(MyConstants.getSftpRootpath());
                 File thefile = new File(filepath);
                 baseAttachment.setFileSize((double) thefile.length()/(1024*1024));
                 errcode = baseAttachmentMapper.updateByPrimaryKeySelective(baseAttachment);
                 purchasingAgency.setBusinessAttachmentIds(uuid);
             } else {
+                //System.out.println("营业执照附件为空！！！！");
                 String uuid = UUID.randomUUID().toString();
                 uuid = uuid.replace("-", "");
                 int posi = filename.lastIndexOf(".");
@@ -298,17 +302,17 @@ public class UsersService implements IUserService {
                 baseAttachment = new BaseAttachment();
                 baseAttachment.setUuid(uuid);
                 baseAttachment.setFilename(filename);
-                baseAttachment.setCategory("base_purchasing_agency_promise");
+                baseAttachment.setCategory("base_purchasing_agency_license");
                 baseAttachment.setSuffix(extname);
                 baseAttachment.setCreationTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setCreatorId(userid);
-                String filepath = InitServer.getProperties().getProperty("main.uploaddir");
-                baseAttachment.setRootPath(filepath);
+                String filepath = MyConstants.getSftpRelatePath();   //交易服务器上传文件的目录地址
+                baseAttachment.setRootPath(MyConstants.getSftpRootpath());
                 if (filepath.endsWith(File.separator))
-                    filepath = filepath + filename;
+                    filepath = filepath + purchasingAgency.getLegalCode()+ File.separator + filename;
                 else
-                    filepath = filepath + File.separator + filename;
+                    filepath = filepath + File.separator + purchasingAgency.getLegalCode()+ File.separator + filename;
                 baseAttachment.setFilepath(filepath);
                 File thefile = new File(filepath);
                 baseAttachment.setFileSize((double) thefile.length()/(1024*1024));
@@ -319,6 +323,7 @@ public class UsersService implements IUserService {
 
         //保存公司风险承诺书图片信息
         filename = purchasingAgency.getCertificateAttachmentIds();
+        //System.out.println("promise file==" + filename);
         if (filename!=null) {
             Map params = new HashMap();
             params.put("category","base_purchasing_agency_promise");
@@ -326,6 +331,7 @@ public class UsersService implements IUserService {
             BaseAttachment baseAttachment = baseAttachmentMapper.getAttachmentByUseridAndCategory(params);
             if (baseAttachment!=null) {
                 String uuid = baseAttachment.getUuid();
+                //System.out.println("风险承诺书附件不为空===" + uuid);
                 int posi = filename.lastIndexOf(".");
                 String extname = null;
                 if (posi > -1) extname = filename.substring(posi + 1);
@@ -335,18 +341,19 @@ public class UsersService implements IUserService {
                 //baseAttachment.setCreationTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
                 //baseAttachment.setCreatorId(userid);
-                String filepath = InitServer.getProperties().getProperty("main.uploaddir");
-                baseAttachment.setRootPath(filepath);
+                String filepath = MyConstants.getSftpRelatePath();    //交易服务器上传文件的目录地址
+                baseAttachment.setRootPath(MyConstants.getSftpRootpath());
                 if (filepath.endsWith(File.separator))
-                    filepath = filepath + filename;
+                    filepath = filepath + purchasingAgency.getLegalCode()+ File.separator + filename;
                 else
-                    filepath = filepath + File.separator + filename;
+                    filepath = filepath + File.separator + purchasingAgency.getLegalCode()+ File.separator + filename;
                 baseAttachment.setFilepath(filepath);
                 File thefile = new File(filepath);
                 baseAttachment.setFileSize((double) thefile.length()/(1024*1024));
                 errcode = baseAttachmentMapper.updateByPrimaryKeySelective(baseAttachment);
                 purchasingAgency.setCertificateAttachmentIds(uuid);
             } else {
+                //System.out.println("风险承诺书附件为空!!!!");
                 String uuid = UUID.randomUUID().toString();
                 uuid = uuid.replace("-", "");
                 baseAttachment = new BaseAttachment();
@@ -360,12 +367,12 @@ public class UsersService implements IUserService {
                 baseAttachment.setCreationTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setLastUpdateTime(new Timestamp(System.currentTimeMillis()));
                 baseAttachment.setCreatorId(userid);
-                String filepath = InitServer.getProperties().getProperty("main.uploaddir");
-                baseAttachment.setRootPath(filepath);
+                String filepath = MyConstants.getSftpRelatePath();  //交易服务器上传文件的目录地址
+                baseAttachment.setRootPath(MyConstants.getSftpRootpath());
                 if (filepath.endsWith(File.separator))
-                    filepath = filepath + filename;
+                    filepath = filepath + purchasingAgency.getLegalCode()+ File.separator + filename;
                 else
-                    filepath = filepath + File.separator + filename;
+                    filepath = filepath + File.separator + purchasingAgency.getLegalCode()+ File.separator + filename;
                 baseAttachment.setFilepath(filepath);
                 File thefile = new File(filepath);
                 baseAttachment.setFileSize((double) thefile.length()/(1024*1024));
